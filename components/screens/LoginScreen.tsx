@@ -10,7 +10,7 @@ const LoginScreen = () => {
         password: Yup.string().min(6, 'Mật khẩu quá ngắn!').required('Required')
     });
 
-    const handleLogin = async (values) => {
+    const handleLogin = async (values: any) => {
         try {
             const response = await fetch('https://asms-americanstudy.com/api/login', {
                 method: 'POST',
@@ -24,17 +24,16 @@ const LoginScreen = () => {
                 })
             });
     
-            const text = await response.text(); // Get the raw response text
-            console.log('Raw Response:', text);
+            const text = await response.text();
+
+            console.log('day la text: ', text);
     
             try {
-                const data = JSON.parse(text); // Attempt to parse the response as JSON
+                const data = JSON.parse(text);
                 if (response.ok) {
-                    // Handle successful login
+                    Alert.alert('Login success')
                     console.log(data);
-                    // Redirect or navigate to the next screen
                 } else {
-                    // Handle errors
                     if (data.errors && data.errors.email) {
                         Alert.alert('Login Failed', data.errors.email);
                     } else {
@@ -52,7 +51,6 @@ const LoginScreen = () => {
         }
     }
     
-
     return (
         <Formik
             initialValues={{ email: '', password: '', rememberMe: false }}
@@ -77,6 +75,7 @@ const LoginScreen = () => {
                     )}
 
                     <Text style={styles.label}>Mật khẩu</Text>
+
                     <TextInput
                         style={styles.input}
                         onChangeText={handleChange('password')}
@@ -84,6 +83,7 @@ const LoginScreen = () => {
                         value={values.password}
                         secureTextEntry
                     />
+
                     {touched.password && errors.password && (
                         <Text style={styles.error}>{errors.password}</Text>
                     )}
