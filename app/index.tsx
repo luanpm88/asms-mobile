@@ -1,6 +1,16 @@
-import React from 'react';
-import Tabs from './components/Tabs';
+// index.tsx
+import React from "react";
+import AppNavigator from "../components/navigation/AppNavigator";
 
-export default function Index() {
-  return <Tabs />;
+const Index = () => {
+    return <AppNavigator />;
 }
+
+export default Index;
+
+// import React from 'react';
+// import Tabs from './components/Tabs';
+
+// export default function Index() {
+//   return <Tabs />;
+// }
