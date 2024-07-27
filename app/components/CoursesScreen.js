@@ -5,7 +5,7 @@ import { List, Avatar, Divider, Button, Menu, Provider } from 'react-native-pape
 export default function CoursesScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [courses, setCourses] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+  
   const [statusFilter, setStatusFilter] = useState('');
   const [visible, setVisible] = useState(false);
 
