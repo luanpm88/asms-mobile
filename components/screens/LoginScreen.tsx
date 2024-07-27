@@ -12,7 +12,7 @@ const LoginScreen = () => {
 
     const handleLogin = async (values: any) => {
         try {
-            const response = await fetch('https://asms-americanstudy.com/api/login', {
+            const response = await fetch('https://asms_prod.com/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
