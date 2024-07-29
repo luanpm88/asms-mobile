@@ -3,13 +3,13 @@ import { Platform, Text, View, StyleSheet, ScrollView } from 'react-native';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Activity from '../components/sections/dashboard/activity';
-import TaskToday from '../components/sections/dashboard/task-today';
-import RunningTask from '../components/sections/dashboard/running-task';
-import UpcomingTask from '../components/sections/dashboard/upcoming-task';
-import WeekCalendar from '../components/sections/dashboard/week-calendar';
-import TaskOverview from '../components/sections/dashboard/task-overview';
-import MonthlyMentors from '../components/sections/dashboard/monthly-mentors';
+import Activity from '../sections/dashboard/activity';
+import TaskToday from '../sections/dashboard/task-today';
+import RunningTask from '../sections/dashboard/running-task';
+import UpcomingTask from '../sections/dashboard/upcoming-task';
+import WeekCalendar from '../sections/dashboard/week-calendar';
+import TaskOverview from '../sections/dashboard/task-overview';
+import MonthlyMentors from '../sections/dashboard/monthly-mentors';
 // import Footer from '../components/common/Footer';
 
 const HomeScreen = () => {
