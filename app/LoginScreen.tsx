@@ -1,10 +1,13 @@
 import React from "react";
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import Checkbox from 'expo-checkbox';
 import { Formik } from "formik";
 import * as Yup from 'yup';
+import { useRouter } from "expo-router";
 
 const LoginScreen = () => {
+    const router = useRouter();
+
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Định dạng email không hợp lệ!').required('Required'),
         password: Yup.string().min(6, 'Mật khẩu quá ngắn!').required('Required')
@@ -12,32 +15,27 @@ const LoginScreen = () => {
 
     const handleLogin = async (values: any) => {
         try {
-            const response = await fetch('http://asms.com/api/login', {
+            const response = await fetch('http://192.168.2.169/api/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     email: values.email,
                     password: values.password,
-                    rememberMe: values.rememberMe
-                })
+                    rememberMe: values.rememberMe,
+                }),
             });
     
             const text = await response.text();
-
-            console.log('day la text: ', text);
-
-            if (!response.ok) {
-                console.error('HTTP Error:', response.status, response.statusText);
-                Alert.alert('Login Failed', `${response.status} - ${response.statusText}`);
-                return;
-            }
+    
             try {
                 const data = JSON.parse(text);
+    
                 if (response.ok) {
-                    Alert.alert('Login success')
-                    console.log(data);
+                    Alert.alert('Success', 'Login successful, navigating to Home.');
+                    router.replace('/HomeScreen');
                 } else {
                     if (data.errors && data.errors.email) {
                         Alert.alert('Login Failed', data.errors.email);
@@ -49,12 +47,15 @@ const LoginScreen = () => {
                 console.error('JSON Parse Error:', jsonError);
                 Alert.alert('Login Failed', 'An unexpected error occurred.');
             }
-    
         } catch (error) {
             console.error('Error during login:', error);
-            Alert.alert('Login Failed', 'An unexpected error occurred.');
+            if (error instanceof TypeError && error.message === 'Network request failed') {
+                Alert.alert('Network Error', 'Failed to connect to the server. Please check your network connection.');
+            } else {
+                Alert.alert('Login Failed', 'An unexpected error occurred.');
+            }
         }
-    }
+    };
     
     return (
         <Formik
