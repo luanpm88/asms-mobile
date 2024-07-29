@@ -35,7 +35,7 @@ const LoginScreen = () => {
     
                 if (response.ok) {
                     Alert.alert('Success', 'Login successful, navigating to Home.');
-                    router.replace('/HomeScreen');
+                    router.replace('/components/screens/HomeScreen');
                 } else {
                     if (data.errors && data.errors.email) {
                         Alert.alert('Login Failed', data.errors.email);
