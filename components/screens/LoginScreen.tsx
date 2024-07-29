@@ -12,7 +12,7 @@ const LoginScreen = () => {
 
     const handleLogin = async (values: any) => {
         try {
-            const response = await fetch('https://asms_prod.com/api/login', {
+            const response = await fetch('http://asms.com/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,7 +27,12 @@ const LoginScreen = () => {
             const text = await response.text();
 
             console.log('day la text: ', text);
-    
+
+            if (!response.ok) {
+                console.error('HTTP Error:', response.status, response.statusText);
+                Alert.alert('Login Failed', `${response.status} - ${response.statusText}`);
+                return;
+            }
             try {
                 const data = JSON.parse(text);
                 if (response.ok) {
