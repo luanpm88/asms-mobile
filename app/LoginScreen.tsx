@@ -3,9 +3,11 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "reac
 import Checkbox from 'expo-checkbox';
 import { Formik } from "formik";
 import * as Yup from 'yup';
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 
 const LoginScreen = () => {
+    const router = useRouter();
+
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('Định dạng email không hợp lệ!').required('Required'),
         password: Yup.string().min(6, 'Mật khẩu quá ngắn!').required('Required')
@@ -33,7 +35,7 @@ const LoginScreen = () => {
     
                 if (response.ok) {
                     Alert.alert('Success', 'Login successful, navigating to Home.');
-                    router.replace('../screens/HomeScreen.tsx')
+                    router.replace('/HomeScreen');
                 } else {
                     if (data.errors && data.errors.email) {
                         Alert.alert('Login Failed', data.errors.email);
@@ -54,7 +56,6 @@ const LoginScreen = () => {
             }
         }
     };
-    
     
     return (
         <Formik
