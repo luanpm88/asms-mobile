@@ -22,16 +22,14 @@ const HomeScreen = () => {
         </View>
         <MonthlyMentors />
         <UpcomingTask /> */}
-        <TaskOverview />
+        {/* <TaskOverview /> */}
       </View>
 
       <ScrollView style={styles.sidebar} contentContainerStyle={styles.sidebarContent}>
-        
-      <TaskOverview />
+        <TaskOverview />
         <WeekCalendar />
         <TaskToday />
-        <UpcomingTask />
-
+        {/* <UpcomingTask /> */}
       </ScrollView>
     </View>
   );
