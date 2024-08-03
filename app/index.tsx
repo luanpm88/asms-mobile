@@ -1,15 +1,22 @@
-import { Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Index() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-    </View>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token) {
+        router.replace('/home');
+      } else {
+        router.replace('/login');
+      }
+    };
+
+    checkLogin();
+  }, []);
+
+  return null;
 }
