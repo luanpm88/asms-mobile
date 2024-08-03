@@ -1,19 +1,20 @@
+import { useRouter } from 'expo-router';
 import { View, Text, Button } from 'react-native';
-import { useRouter } from "expo-router";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Login() {
+const LoginScreen = () => {
   const router = useRouter();
 
-  const handleLogin = async () => {
-    await AsyncStorage.setItem('userToken', 'dummy-token');
-    router.replace('/home');
+  const handleLogin = () => {
+    // Implement your login logic here
+    router.replace('/');
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View>
       <Text>Login Screen</Text>
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Log In" onPress={handleLogin} />
     </View>
   );
-}
+};
+
+export default LoginScreen;

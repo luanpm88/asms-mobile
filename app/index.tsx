@@ -1,22 +1,11 @@
-import { useRouter } from "expo-router";
-import { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Tabs } from 'expo-router';
 
-export default function Index() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      const token = await AsyncStorage.getItem('userToken');
-      if (token) {
-        router.replace('/home');
-      } else {
-        router.replace('/login');
-      }
-    };
-
-    checkLogin();
-  }, []);
-
-  return null;
+export default function HomeScreen() {
+  return (
+    <Tabs>
+      <Tabs.Screen name="home" options={{ title: 'Home' }} />
+      <Tabs.Screen name="contacts" options={{ title: 'Contacts' }} />
+      <Tabs.Screen name="settings" options={{ title: 'Settings' }} />
+    </Tabs>
+  );
 }

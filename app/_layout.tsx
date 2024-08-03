@@ -1,45 +1,28 @@
-import { Stack } from "expo-router";
-import { useEffect, useState } from "react";
-import { useRouter } from "expo-router";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-export default function RootLayout() {
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+import { useState, useEffect } from 'react';
+import { Redirect } from 'expo-router';
+
+// Simulate checking login status
+const checkLoginStatus = async () => {
+  // Replace with actual authentication logic
+  return new Promise<boolean>((resolve) => setTimeout(() => resolve(false), 1000));
+};
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkLogin = async () => {
-      setIsLoggedIn(false);
-      // const token = await AsyncStorage.getItem('userToken');
-      // if (token) {
-      //   setIsLoggedIn(true);
-      // } else {
-      //   setIsLoggedIn(false);
-      // }
+    const verifyLogin = async () => {
+      const status = await checkLoginStatus();
+      setIsLoggedIn(status);
     };
 
-    checkLogin();
+    verifyLogin();
   }, []);
 
-  useEffect(() => {
-    if (isLoggedIn === false) {
-      router.replace('/login');
-    }
-  }, [isLoggedIn]);
-
   if (isLoggedIn === null) {
-    return null; // Hoặc một màn hình loading
+    // Optionally show a loading spinner or placeholder while checking login status
+    return null;  // Or return a loading spinner
   }
 
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-    <Stack>
-      {isLoggedIn ? (
-        <Stack.Screen name="(tabs)" />
-      ) : (
-        <Stack.Screen name="/login" />
-      )}
-    </Stack>
-    </GestureHandlerRootView>
-  );
+  return isLoggedIn ? <>{children}</> : <Redirect href="/login" />;
 }
