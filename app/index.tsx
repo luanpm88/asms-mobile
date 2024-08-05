@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useRouter, type ErrorBoundaryProps } from "expo-router";
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
