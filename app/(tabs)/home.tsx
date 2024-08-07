@@ -8,33 +8,11 @@ import { Divider } from 'react-native-paper';
 
 import Colors from "../constants/Colors";
 
-export default function HomeScreen() {
-    const router = useRouter();
-
-    const goToSettings = () => {
-        router.push('/settings');
-    };
+export default function App() {
   return (
-    <ScrollView >
-      <Topbar/>
-      <Divider style={styles.divider} />
-      <Slider/>
-      <Menu/>
-      <Divider style={styles.divider} />
-      <SectionRecent/>
-    </ScrollView>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Hello Home Screen</Text>
+      <Button title="Go to Settings" onPress={goToSettings} />
+    </View>
   );
 }
-
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  divider: {
-    height: 2,
-    backgroundColor: Colors.divider,
-  },
-});
