@@ -1,16 +1,12 @@
-import { View, Text, Button } from 'react-native';
-import { useRouter } from "expo-router";
+import React from 'react';
+import { View, Text } from 'react-native';
+import { Button } from 'react-native-elements';
 
-export default function HomeScreen() {
-    const router = useRouter();
-
-    const goToSettings = () => {
-        router.push('/settings');
-    };
+export default function App() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Hello Home Screen</Text>
-      <Button title="Go to Settings" onPress={goToSettings} />
+      <Text>Hello World!</Text>
+      <Button title="Click Me" onPress={() => alert('Button Pressed!')} />
     </View>
   );
 }

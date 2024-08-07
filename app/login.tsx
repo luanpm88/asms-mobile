@@ -10,10 +10,16 @@ export default function Login() {
     router.replace('/home');
   };
 
+  const handleProfile = async () => {
+    await AsyncStorage.setItem('userToken', 'dummy-token');
+    router.replace('/profile');
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Login Screen</Text>
       <Button title="Login" onPress={handleLogin} />
+      <Button title="Profile" onPress={handleProfile} />
     </View>
   );
 }

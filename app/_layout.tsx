@@ -35,7 +35,7 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
     <Stack>
       {isLoggedIn ? (
-        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(tabs)"  />
       ) : (
         <Stack.Screen name="/login" />
       )}
