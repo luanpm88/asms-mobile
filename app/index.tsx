@@ -1,5 +1,22 @@
-import { Redirect } from 'expo-router';
+import { useRouter } from "expo-router";
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Index() {
-  return <Redirect href="/components/screens/LoginScreen"/>;
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token) {
+        router.replace('/home');
+      } else {
+        router.replace('/login');
+      }
+    };
+
+    checkLogin();
+  }, []);
+
+  return null;
 }
