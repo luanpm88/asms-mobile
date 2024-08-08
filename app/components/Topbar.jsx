@@ -1,27 +1,39 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet,   TouchableOpacity, } from 'react-native';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 
-const Topbar = ({ notificationCount = 9 }) => {
+const Topbar = ({ notificationCount = '9+' }) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
         <Image
-          source={{ uri: 'https://gravatar.com/avatar/cf2ddcd2f75e0eefb35cb55db283fecf?s=400&d=robohash&r=x' }} 
+          source={require('../../assets/images/avatar.jpg')} 
           style={styles.avatar}
         />
       </View>
       <Text style={styles.name}>Pham Tung Anh</Text>
-      <View style={styles.notificationContainer}>
-      <FontAwesome name="bell" size={30} color="Colors.black" />
-        {notificationCount > 0 && (
+     
+      <TouchableOpacity
+          onPress={() => {}}
+          style={{
+            marginRight: 20,
+            backgroundColor: '#FE4B4B',
+            padding: 10,
+            borderRadius: 50,
+            shadowColor: "#F8F8F8",
+            shadowOffset: { width: 2, height: 4 },
+            shadowOpacity: 0.2,
+            shadowRadius: 3,
+          }}
+        >
+          
+          <FontAwesome name="bell" size={30} color={Colors.white} />
           <View style={styles.badge}>
             <Text style={styles.badgeText}>{notificationCount}</Text>
           </View>
-        )}
-      </View>
+        </TouchableOpacity>
       
     </View>
   );
@@ -31,7 +43,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     color: Colors.white,
   },
   avatarContainer: {
@@ -40,32 +53,33 @@ const styles = StyleSheet.create({
   avatar: {
     width: 50, 
     height: 50,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   name: {
     flex: 1, 
     fontSize: 20,
-    color: Colors.black,
+    color: Colors.colorText,
   },
-  notificationContainer: {
-    position: 'relative',
-  },
+  
   badge: {
     position: 'absolute',
     top: -5,
     right: -5,
-    backgroundColor: Colors.red,
-    borderRadius: 10,
-    width: 20,
-    height: 20,
+    backgroundColor: '#FE4B4B',
+    borderRadius: 15,
+    width: 22,
+    height: 22,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 1,
+    borderWidth: 2, 
+    borderColor: '#FFFFFF',
   },
   badgeText: {
     color: Colors.white,
     fontSize: 12,
     fontWeight: 'bold',
+    
   },
 });
 

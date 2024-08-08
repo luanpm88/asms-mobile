@@ -1,27 +1,29 @@
 import React from 'react';
 import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
+import Colors from "../constants/Colors";
 
 const { width: viewportWidth } = Dimensions.get('window');
 
 const data = [
   {
-    title: '11',
-    uri: 'https://via.placeholder.com/400x300.png?text=First+Page',
+    title: '1',
+    uri: `https://picsum.photos/300/200?random=${Math.floor(Math.random() * 1000)}`,
   },
   {
     title: '2',
-    uri: 'https://via.placeholder.com/400x300.png?text=Second+Page',
+    uri: `https://picsum.photos/300/200?random=${Math.floor(Math.random() * 1000)}`,
   },
   {
     title: '3',
-    uri: 'https://via.placeholder.com/400x300.png?text=Third+Page',
+    uri: `https://picsum.photos/300/200?random=${Math.floor(Math.random() * 1000)}`,
   },
 ];
 
 const renderItem = ({ item }) => (
   <View style={styles.slide}>
     <Image source={{ uri: item.uri }} style={styles.image} />
+    
   </View>
 );
 
@@ -46,7 +48,10 @@ const Slider = () => {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical:10,
+    // borderRadius: 15,
+
   },
   container: {
     flex: 1,
@@ -61,6 +66,9 @@ const styles = StyleSheet.create({
   image: {
     width: viewportWidth - 2 * 20, 
     height: 300,
+    borderRadius: 15,
+    borderWidth: 2, 
+    borderColor: Colors.divider,
   },
 });
 
