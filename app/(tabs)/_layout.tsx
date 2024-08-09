@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Tabs } from 'expo-router';
 import Colors from '../constants/Colors';
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { Feather, AntDesign, Entypo, Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 export default function TabsLayout() {
   return (
@@ -11,7 +11,7 @@ export default function TabsLayout() {
         tabBarStyle: {
           backgroundColor: Colors.bgColor,
           borderTopWidth: 0,
-          padding: 0,
+          paddingTop: 7,
         },
         tabBarShowLabel: true,
         tabBarActiveTintColor: Colors.primaryColor,
@@ -28,9 +28,13 @@ export default function TabsLayout() {
               alignItems: 'center',
               // backgroundColor: focused ? 'rgba(0,0,0,0.1)' : 'transparent',
               borderRadius: 15,
-              padding: 5,
+              padding: 3,
             }}>
-              <Feather name="home" size={28} color={color} />
+              {focused ? (
+                <Entypo name="home" size={20} color={color} />
+              ) : (
+                <AntDesign name="home" size={20} color={color} />
+              )}
             </View>
           ),
         }}
@@ -46,9 +50,14 @@ export default function TabsLayout() {
               alignItems: 'center',
               // backgroundColor: focused ? 'rgba(0,0,0,0.1)' : 'transparent',
               borderRadius: 15,
-              padding: 5,
+              padding: 3,
+              
             }}>
-              <AntDesign name="calendar" size={28} color={color} />
+               {focused ? (
+                 <Entypo name="calendar" size={20} color={color} />
+              ) : (
+                <Feather name="calendar" size={20} color={color} />
+              )}
             </View>
           ),
         }}
@@ -64,9 +73,13 @@ export default function TabsLayout() {
               alignItems: 'center',
               // backgroundColor: focused ? 'rgba(0,0,0,0.1)' : 'transparent',
               borderRadius: 15,
-              padding: 5,
+              padding: 3,
             }}>
-              <AntDesign name="setting" size={24} color={color} />
+              {focused ? (
+                 <Ionicons name="settings-sharp" size={20} color={color} />
+              ) : (
+              <AntDesign name="setting" size={20} color={color} />
+              )}
             </View>
           ),
         }}
@@ -81,10 +94,15 @@ export default function TabsLayout() {
               justifyContent: 'center',
               alignItems: 'center',
               // backgroundColor: focused ? 'rgba(0,0,0,0.1)' : 'transparent',
-              borderRadius: 10,
-              padding: 5,
+              borderRadius: 15,
+              padding: 3,
             }}>
-              <AntDesign name="user" size={28} color={color} />
+              {focused ? (
+                 <FontAwesome5 name="user-alt" size={20} color={color} />
+              ) : (
+                <FontAwesome5 name="user" size={20} color={color} />
+              )}
+              
             </View>
           ),
         }}

@@ -1,85 +1,109 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet,   TouchableOpacity, } from 'react-native';
-// import Icon from 'react-native-vector-icons/FontAwesome';
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
+// import {loadFonts} from "../constants/loadFonts";
+import globalStyles from "../constants/styles";
 
-const Topbar = ({ notificationCount = '9+' }) => {
+const Topbar = ({ notificationCount = "9+" }) => {
+  // const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  // useEffect(() => {
+  //   loadFonts().then(() => setFontsLoaded(true));
+  // }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
         <Image
-          source={require('../../assets/images/avatar.jpg')} 
+          source={require("../../assets/images/avatar.jpg")}
           style={styles.avatar}
         />
       </View>
-      <Text style={styles.name}>Pham Tung Anh</Text>
-     
+      <View style={styles.textContainer}>
+        <Text style={styles.sub}>Good morning,</Text>
+        <Text style={styles.name}>Pham Tung Anh</Text>
+      </View>
+
       <TouchableOpacity
-          onPress={() => {}}
-          style={{
+        onPress={() => {}}
+        style={[
+          {
             marginRight: 20,
-            backgroundColor: '#FE4B4B',
+            backgroundColor: Colors.white,
             padding: 10,
             borderRadius: 50,
-            shadowColor: "#F8F8F8",
+            // Inline shadow styles
+            shadowColor: "#E5E4E4",
             shadowOffset: { width: 2, height: 4 },
             shadowOpacity: 0.2,
             shadowRadius: 3,
-          }}
-        >
-          
-          <FontAwesome name="bell" size={30} color={Colors.white} />
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>{notificationCount}</Text>
-          </View>
-        </TouchableOpacity>
-      
+          },
+          globalStyles.shadow, // Import shadow styles from globalStyles
+        ]}
+      >
+        <Feather name="bell" size={24} color={Colors.black} />
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>{notificationCount}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 10,
     color: Colors.white,
   },
   avatarContainer: {
-    marginRight: 10, 
+    marginRight: 10,
   },
   avatar: {
-    width: 50, 
+    width: 50,
     height: 50,
-    borderRadius: 10,
+    borderRadius: 30,
   },
   name: {
-    flex: 1, 
-    fontSize: 20,
+    flex: 1,
+    fontSize: 18,
     color: Colors.colorText,
+    fontWeight: "700",
+    // fontFamily: 'custom-font',
   },
-  
+  sub: {
+    flex: 1,
+    fontSize: 14,
+    color: Colors.colorText,
+
+    // fontFamily: 'custom-font',
+  },
+
   badge: {
-    position: 'absolute',
+    position: "absolute",
     top: -5,
     right: -5,
-    backgroundColor: '#FE4B4B',
+    backgroundColor: "red",
     borderRadius: 15,
     width: 22,
     height: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: 1,
-    borderWidth: 2, 
-    borderColor: '#FFFFFF',
+    borderWidth: 2,
+    borderColor: "#FFFFFF",
   },
   badgeText: {
     color: Colors.white,
     fontSize: 12,
-    fontWeight: 'bold',
-    
+    fontWeight: "bold",
+  },
+  textContainer: {
+    flexDirection: "column",
+    flex: 1,
   },
 });
 

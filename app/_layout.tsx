@@ -21,7 +21,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (isLoggedIn === false) {
       router.replace('/login');
-    }
+    } 
   }, [isLoggedIn]);
 
   if (isLoggedIn === null) {
@@ -30,7 +30,8 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Stack>
+      <Stack
+      >
         {isLoggedIn ? (
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         ) : (

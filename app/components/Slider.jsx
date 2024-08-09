@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import Colors from "../constants/Colors";
+import globalStyles from '../constants/styles'
 
 const { width: viewportWidth } = Dimensions.get('window');
 
@@ -22,14 +23,14 @@ const data = [
 
 const renderItem = ({ item }) => (
   <View style={styles.slide}>
-    <Image source={{ uri: item.uri }} style={styles.image} />
+    <Image source={{ uri: item.uri }} style={[globalStyles.shadow, styles.image]}/>
     
   </View>
 );
 
 const Slider = () => {
   return (
-    <View style={styles.outerContainer}>
+    <View style={[globalStyles.shadow, styles.outerContainer]}>
       <View style={styles.container}>
         <Carousel
           data={data}
@@ -50,25 +51,21 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical:10,
-    // borderRadius: 15,
-
   },
   container: {
     flex: 1,
     height: 300,
   },
   slide: {
-    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
+    borderRadius: 15,
   },
   image: {
     width: viewportWidth - 2 * 20, 
     height: 300,
-    borderRadius: 15,
-    borderWidth: 2, 
-    borderColor: Colors.divider,
+    
   },
 });
 

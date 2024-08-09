@@ -8,9 +8,10 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { FontAwesome, FontAwesome6, AntDesign } from "@expo/vector-icons";
-import Colors from "../constants/Colors"; // Assuming Colors is defined in your project
+import { FontAwesome, FontAwesome6, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import Colors from "../constants/Colors"; 
 import Slider from "@react-native-community/slider";
+import globalStyles from '../constants/styles'
 
 const sections = [
   {
@@ -40,11 +41,12 @@ const { width } = Dimensions.get("window");
 const CourseRecent = () => {
   const [value, setValue] = useState(30);
   const [sliderWidth, setSliderWidth] = useState(0);
-  const thumbPosition = (value / 100) * (sliderWidth - 40);
+  const thumbPosition = (value / 100) * (sliderWidth - 40 * 2);
+  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Lớp học gần đây</Text>
+        <Text style={globalStyles.title}>Lớp học gần đây</Text>
       </View>
 
       <ScrollView
@@ -54,7 +56,7 @@ const CourseRecent = () => {
       >
         {sections.map((item) => (
           <TouchableOpacity key={item.id} style={styles.categoryBtn}>
-            <View style={styles.card}>
+            <View style={[globalStyles.shadow, styles.card]}>
               <View style={[styles.item, { marginVertical: 10 }]}>
                 <View style={styles.iconContainer}>
                   <Image
@@ -86,12 +88,9 @@ const CourseRecent = () => {
               </View>
 
               <View style={styles.item}>
-                <AntDesign
-                  style={{ paddingRight: 20 }}
-                  name="calendar"
-                  size={24}
-                  color={Colors.colorText}
-                />
+                <MaterialCommunityIcons 
+                style={{ paddingRight: 20 }}
+                name="book-edit-outline" size={24} color={Colors.colorText}/>
                 <Text style={styles.itemText}>Bài học trước</Text>
               </View>
               <View style={styles.item}>
@@ -103,19 +102,14 @@ const CourseRecent = () => {
                 />
                 <Text style={styles.itemText}>FINAL TEST - TEST DAY</Text>
               </View>
-              <View style={styles.item}>
-                <AntDesign
-                  style={{ paddingRight: 20 }}
-                  name="calendar"
-                  size={24}
-                  color={Colors.colorText}
-                />
+              <View style={styles.item}> 
+                <FontAwesome 
+                  style={{ paddingRight: 20 }} 
+                  name="comments-o" size={24} 
+                  color={Colors.colorText}/>
                 <Text style={styles.itemText}>Nhận xét của giáo viên</Text>
               </View>
-              <View style={styles.item}>
-                
-                <Text style={styles.itemText}>---</Text>
-              </View>
+              
             </View>
           </TouchableOpacity>
         ))}
@@ -136,23 +130,25 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
-  title: {
-    fontSize: 20,
-    color: Colors.colorText,
-  },
+  
   card: {
-    height: 260,
-    width: width - 40,
-    backgroundColor: Colors.bgCard,
-    padding: 10,
-    marginRight: 10,
+    height: 250,
+    width: width - 40 * 2, 
+    backgroundColor: Colors.white,
+    padding: 15, 
+    borderRadius: 20,
+  },
+  categoryBtn: {
+    paddingRight: 15, 
+    paddingVertical: 5,
+    marginLeft:2,
     borderRadius: 20,
   },
   codeText: {
-    fontSize: 18,
-    fontWeight: '500',
-    color: Colors.danger,
-    marginBottom: 5,
+    fontSize: 16,
+    marginBottom: 5, 
+    color: Colors.colorText,
+    fontWeight: "600",
   },
   sessionText: {
     fontSize: 14,
@@ -198,22 +194,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   slider: {
-    width: width - 60,
+    width: width - 50 * 2, 
     height: 10,
     paddingVertical: 20,
   },
   badgeContainer: {
     position: 'absolute',
-    top: -35, 
+    top: -30, 
     alignItems: 'center',
-  },
+    
+  }, 
   badgeText: {
     backgroundColor: Colors.primaryColor,
-    color: '#fff',
+    color: Colors.white,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderRadius: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   scrollContainer: {
     // paddingHorizontal: 10,

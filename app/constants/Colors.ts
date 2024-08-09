@@ -1,11 +1,11 @@
 export default {
-    primaryColor: '#253f8e',
+    primaryColor: '#004FAB',
     secondaryColor: '#ed8f0c',
     bgColor: '#FFFFFF',
     black: '#27283a',
     white: '#FFFFFF',
     red: '#FF0000',
-    divider: '#EEEEEE',
+    divider: '#F2F2F2',
     colorText: '#313237',
     'danger': '#FF6666',
     'yellow': '#EDD383',
@@ -15,3 +15,4 @@ export default {
     bgCard: '#F3F6FB',
     
   }
+  

@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import Colors from "../constants/Colors";
-
+import globalStyles from '../constants/styles'
 const categories = [
-  { id: '1', title: 'Thời khóa biểu', iconName: 'calendar-alt', color: Colors.danger },
-  { id: '2', title: 'Sổ liên lạc', iconName: 'file', color: Colors.yellow },
-  { id: '3', title: 'Kết quả học tập', iconName: 'address-card', color: Colors.purple },
-  { id: '4', title: 'Học phí', iconName: 'money-bill-alt', color: Colors.success },
-  { id: '5', title: 'Báo cáo', iconName: 'file-alt', color: Colors.blue },
+  { id: '1', title: 'Thời khóa biểu', iconName: require('../../assets/images/clock.png')},
+  { id: '2', title: 'Khóa học', iconName: require('../../assets/images/class.png')},
+  { id: '3', title: 'Hợp đồng', iconName: require('../../assets/images/contract.png')}, 
+  { id: '4', title: 'Du học', iconName: require('../../assets/images/abroad.png')},
+  { id: '5', title: 'Hồ sơ', iconName: require('../../assets/images/profile.png')}, 
+  { id: '6', title: 'Công nợ', iconName: require('../../assets/images/payment.png')},
+  { id: '7', title: 'Hệ thống', iconName: require('../../assets/images/system.png')},
+  { id: '8', title: 'Kết quả học tập', iconName: require('../../assets/images/report.png')},
+  { id: '9', title: 'Báo cáo', iconName: require('../../assets/images/result.png')},
 ];
 
 const Menu = () => {
   return (
     <View style={styles.container}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-        {categories.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.categoryBtn}
-          >
-            <View style={[styles.outerBorder, { borderColor: item.color }]}>
-              <View style={[styles.innerBorder, { backgroundColor: `${item.color}33` }]}>
-                <FontAwesome5
-                  name={item.iconName}
-                  size={24}
-                  color={item.color}
-                />
+      <ScrollView>
+        <View style={styles.scrollContainer}>
+          {categories.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              style={styles.categoryBtn}
+            >
+              <View style={styles.outerBorder}>
+              <View style={[globalStyles.shadow, styles.innerBorder]}>
+                  <Image
+                    source={item.iconName}
+                    style={styles.avatar}
+                  />
+                </View>
               </View>
-            </View>
-            <Text style={styles.categoryBtnTxt}>
-              {item.title}
-            </Text>
-          </TouchableOpacity>
-        ))}
+              <Text style={styles.categoryBtnTxt}>
+                {item.title}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </ScrollView>
     </View>
   );
@@ -43,31 +47,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
+    alignItems: 'center',
   },
   scrollContainer: {
     flexDirection: 'row',
-    // alignItems: 'center',
+    flexWrap: 'wrap',
   },
   categoryBtn: {
-    padding: 10,
+    width: '25%', 
+    paddingTop: 10,
     borderRadius: 5,
     alignItems: 'center',
-    marginRight: 10,
-    maxWidth: 100, 
+    marginBottom: 10,
   },
   categoryBtnTxt: {
     color: Colors.black,
-    marginTop: 5,
+    marginTop: 10,
     textAlign: 'center',
-    flexWrap: 'wrap', 
   },
   outerBorder: {
-    borderRadius: 10, 
-    padding: 7, 
+    borderRadius: 10,
   },
   innerBorder: {
-    borderRadius: 10, 
-    padding: 10, 
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+    padding: 10,
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 30,
+    height: 30,
   },
 });
 
