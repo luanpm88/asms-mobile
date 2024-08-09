@@ -1,15 +1,20 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, Animated, Dimensions, Easing } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Animated, Dimensions, Easing, ScrollView } from 'react-native';
 import Colors from '../../../constants/Colors';
 import NotificationItem from './NotificationItem';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../../store/store';
+import { removeNotification } from '@/app/reducer/features/notifications/notificationsSlice';
 
 const { width, height } = Dimensions.get('window');
 const HEADER_HEIGHT = 60;
 const FOOTER_HEIGHT = 60;
 
-const NotificationModal = ({ visible, onClose }: any) => {
+const Notification = ({ visible, onClose }: any) => {
   const translateX = useRef(new Animated.Value(-width)).current;
+  const dispatch: AppDispatch = useDispatch();
+  const notifications = useSelector((state: RootState) => state.notifications.notifications);
 
   useEffect(() => {
     if (visible) {
@@ -34,29 +39,19 @@ const NotificationModal = ({ visible, onClose }: any) => {
   return (
     <Animated.View style={[styles.modalView, { transform: [{ translateX }] }]}>
       <Text style={styles.modalTitle}>Thông báo</Text>
-      <View style={styles.notificationList}>
-        <NotificationItem
-          title="Sổ liên lạc điện tử"
-          date="07/08/2024"
-          info="Thông tin sổ liên lạc điện tử ngày 07/08 đã được cập nhật."
-          titleIcon={<Entypo name="book" size={20} color={Colors.danger} />}
-          timeIcon={<Entypo name="clock" size={13} color={Colors.colorText} />}
-        />
-        <NotificationItem
-          title="Sổ liên lạc điện tử"
-          date="09/08/2024"
-          info="Thông tin sổ liên lạc điện tử ngày 09/08 đã được cập nhật."
-          titleIcon={<Entypo name="book" size={20} color={Colors.danger} />}
-          timeIcon={<Entypo name="clock" size={13} color={Colors.colorText} />}
-        />
-        <NotificationItem
-          title="Sổ liên lạc điện tử"
-          date="10/08/2024"
-          info="Thông tin sổ liên lạc điện tử ngày 010/08 đã được cập nhật."
-          titleIcon={<Entypo name="book" size={20} color={Colors.danger} />}
-          timeIcon={<Entypo name="clock" size={13} color={Colors.colorText} />}
-        />
-      </View>
+      <ScrollView style={styles.notificationList}>
+        {notifications.map((notification, index) => (
+          <NotificationItem
+            key={index}
+            title={notification.title}
+            date={notification.date}
+            info={notification.info}
+            titleIcon={notification.titleIcon}
+            timeIcon={notification.timeIcon}
+            onDelete={() => dispatch(removeNotification(index))}
+          />
+        ))}
+      </ScrollView>
       <Pressable
         style={[styles.button, styles.buttonClose]}
         onPress={onClose}
@@ -108,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationModal;
+export default Notification;

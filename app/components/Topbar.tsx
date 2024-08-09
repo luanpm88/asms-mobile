@@ -1,16 +1,26 @@
 // Topbar.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import globalStyles from '../constants/styles';
-import Notifications from './system/notifications/Notification'
+import Notification from './system/notifications/Notification';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../store/store';
+import { removeNotification, populateTestNotifications } from '@/app/reducer/features/notifications/notificationsSlice';
 
 const Topbar = ({ notificationCount = "9+" }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
+
+  const dispatch: AppDispatch = useDispatch();
+  const notifications = useSelector((state: RootState) => state.notifications.notifications);
+
+  useEffect(() => {
+    dispatch(populateTestNotifications());
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
@@ -48,7 +58,7 @@ const Topbar = ({ notificationCount = "9+" }) => {
         </View>
       </TouchableOpacity>
 
-      <Notifications
+      <Notification
         visible={modalVisible}
         onClose={hideModal}
       />
