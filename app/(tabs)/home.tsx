@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, Modal } from 'react-native';
 import { useRouter } from "expo-router";
 import Topbar from '../components/Topbar';
 import Slider from '../components/Slider';
@@ -8,7 +8,6 @@ import CourseRecent from '../components/CourseRecent';
 import News from '../components/News';
 import Share from '../components/Share';
 import { Divider } from 'react-native-paper';
-
 import Colors from "../constants/Colors";
 
 export default function HomeScreen() {
@@ -39,9 +38,6 @@ export default function HomeScreen() {
     </View>
   );
 }
-
-
-
 
 const styles = StyleSheet.create({
   container: {

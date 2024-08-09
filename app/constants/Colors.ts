@@ -4,7 +4,7 @@ export default {
     bgColor: '#FFFFFF',
     black: '#27283a',
     white: '#FFFFFF',
-    red: '#FF0000',
+    close: '#FF0000',
     divider: '#F2F2F2',
     colorText: '#313237',
     'danger': '#FF6666',

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Ionicons, FontAwesome, Feather } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
-// import {loadFonts} from "../constants/loadFonts";
-import globalStyles from "../constants/styles";
+// Topbar.js
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
+import globalStyles from '../constants/styles';
+import Notifications from './system/notifications/Notification'
 
 const Topbar = ({ notificationCount = "9+" }) => {
-  // const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  // useEffect(() => {
-  //   loadFonts().then(() => setFontsLoaded(true));
-  // }, []);
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
 
   return (
     <View style={styles.container}>
@@ -26,7 +26,7 @@ const Topbar = ({ notificationCount = "9+" }) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => {}}
+        onPress={() => showModal()}
         style={[
           {
             marginRight: 20,
@@ -47,6 +47,11 @@ const Topbar = ({ notificationCount = "9+" }) => {
           <Text style={styles.badgeText}>{notificationCount}</Text>
         </View>
       </TouchableOpacity>
+
+      <Notifications
+        visible={modalVisible}
+        onClose={hideModal}
+      />
     </View>
   );
 };
@@ -78,10 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     color: Colors.colorText,
-
-    // fontFamily: 'custom-font',
   },
-
   badge: {
     position: "absolute",
     top: -5,
