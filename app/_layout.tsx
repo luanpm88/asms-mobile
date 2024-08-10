@@ -1,8 +1,12 @@
+import { Provider } from "react-redux";
+import { store } from './store/store'
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { populateTestNotifications } from "./reducer/features/notifications/notificationsSlice";
+
 import { useIsFocused } from '@react-navigation/native';
 export default function RootLayout() {
   const router = useRouter();
@@ -37,14 +41,17 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-    <Stack>
-      {isLoggedIn ? (
-        <Stack.Screen name="(tabs)" />
-      ) : (
-        <Stack.Screen name="login" />
-      )}
-    </Stack>
-    </GestureHandlerRootView>
+    <Provider store={store}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Stack
+        >
+          {isLoggedIn ? (
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          ) : (
+            <Stack.Screen name="login" options={{ headerShown: false }} />
+          )}
+        </Stack>
+      </GestureHandlerRootView>
+    </Provider>
   );
 }

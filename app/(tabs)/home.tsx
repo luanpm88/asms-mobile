@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, Modal } from 'react-native';
 import { useRouter } from "expo-router";
 import Topbar from '../components/Topbar';
 import Slider from '../components/Slider';
@@ -6,8 +6,8 @@ import Menu from '../components/Menu';
 import SectionRecent from '../components/SectionRecent';
 import CourseRecent from '../components/CourseRecent';
 import News from '../components/News';
+import Share from '../components/Share';
 import { Divider } from 'react-native-paper';
-
 import Colors from "../constants/Colors";
 
 export default function HomeScreen() {
@@ -24,27 +24,25 @@ export default function HomeScreen() {
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
       >
-        <Divider style={styles.divider} />
+        {/* <Divider style={styles.divider} /> */}
         <Slider />
         <Menu />
-        <Divider style={{ ...styles.divider, height: 4 }} />
+        {/* <Divider style={{ ...styles.divider, height: 4 }} /> */}
         <SectionRecent />
-        <Divider style={{ ...styles.divider, height: 4 }} />
+        {/* <Divider style={{ ...styles.divider, height: 4 }} /> */}
         <CourseRecent />
-        <Divider style={{ ...styles.divider, height: 4 }} />
+        {/* <Divider style={{ ...styles.divider, height: 4 }} /> */}
         <News />
+        <Share />
       </ScrollView>
     </View>
   );
 }
 
-
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.divider,
   },
   divider: {
     height: 2,
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 10,
-    backgroundColor: Colors.white
+    backgroundColor: Colors.divider
   },
   scrollViewContent: {
     paddingTop: 60, 

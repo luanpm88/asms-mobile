@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { FontAwesome, FontAwesome6, AntDesign } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
+import globalStyles from '../constants/styles'
 
 const sections = [
   {
@@ -37,27 +38,26 @@ const SectionRecent = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Buổi học tuần này</Text>
-        <Text style={{ color: "#4D4D52" }}>5/08 - 11/08</Text>
+        <Text style={globalStyles.title}>Buổi học tuần này</Text>
+        <Text style={{ color: Colors.colorText }}>5/08 - 11/08</Text>
       </View>
 
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
       >
         {sections.map((item) => (
           <TouchableOpacity key={item.id} style={styles.categoryBtn}>
-            <View style={[styles.card, { borderColor: item.color }]}>
+            <View style={[globalStyles.shadow, styles.card]}>
               <Text style={styles.codeText}>{item.code}</Text>
-              <Text style={styles.sessionText}>Buổi 62: ---</Text>
+              {/* <Text style={styles.sessionText}>Buổi 62: ---</Text> */}
               <View style={styles.cardContainer}>
                 <View style={styles.item}>
                   <View style={styles.iconContainer}>
                     <FontAwesome
                       name="graduation-cap"
                       size={24}
-                      color={Colors.white} 
+                      color={Colors.colorText} 
                     />
                   </View>
                   <View style={styles.textContainer}>
@@ -67,7 +67,7 @@ const SectionRecent = () => {
                 </View>
                 <View style={styles.item}>
                   <View style={styles.iconContainer}>
-                    <FontAwesome6 name="door-open" size={24} color={Colors.white} />
+                    <FontAwesome6 name="door-open" size={24} color={Colors.colorText} />
                   </View>
                   <View style={styles.textContainer}>
                     <Text style={styles.itemText}>--</Text>
@@ -75,7 +75,7 @@ const SectionRecent = () => {
                 </View>
               </View>
               <View style={styles.item}>
-                <AntDesign style={{ paddingRight: 20 }}name="calendar" size={24} color={Colors.white} />
+                <AntDesign style={{ paddingRight: 20 }}name="calendar" size={24} color={Colors.colorText} />
                 <Text style={styles.itemText}>T7 10/08, 16:20 -17:50</Text>
               </View>
             </View>
@@ -98,27 +98,28 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
-  title: {
-    fontSize: 20,
-    color: Colors.colorText,
-  },
   card: {
-    height: 160,
-    width: viewportWidth - 40, 
-    backgroundColor: Colors.danger,
-    padding: 10, 
-    borderWidth: 2, 
-    marginRight: 10,
+    height: 140,
+    width: viewportWidth - 40*2, 
+    backgroundColor: Colors.white,
+    padding: 15, 
+    borderRadius: 20,
+  },
+  categoryBtn: {
+    paddingRight: 15, 
+    paddingVertical: 5,
+    marginLeft:2,
     borderRadius: 20,
   },
   codeText: {
     fontSize: 16,
-    color: Colors.white,
     marginBottom: 5, 
+    color: Colors.colorText,
+    fontWeight: "600",
   },
   sessionText: {
     fontSize: 14,
-    color: Colors.white,
+    color: Colors.colorText,
     paddingVertical: 5,
   },
   cardContainer: {
@@ -142,11 +143,11 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 16,
     paddingVertical: 5,
-    color: Colors.white,
+    color: Colors.colorText,
   },
   itemSubText: {
     fontSize: 14,
-    color: Colors.white,
+    color: Colors.colorText,
   },
 });
 
