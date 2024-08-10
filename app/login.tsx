@@ -6,7 +6,7 @@ export default function Login() {
   const router = useRouter();
 
   const handleLogin = async () => {
-    await AsyncStorage.setItem('userToken', 'dummy-token');
+    await AsyncStorage.setItem('userToken', 'dummy-tokens');
     router.replace('/home');
   };
 

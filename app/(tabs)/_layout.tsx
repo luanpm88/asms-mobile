@@ -8,10 +8,12 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
+        headerShown: false,
         tabBarStyle: {
           backgroundColor: Colors.bgColor,
           borderTopWidth: 0,
           padding: 0,
+          
         },
         tabBarShowLabel: true,
         tabBarActiveTintColor: Colors.primaryColor,

@@ -1,28 +1,65 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Header } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Hoặc thư viện icon bạn sử dụng
-import { Tabs } from '@ant-design/react-native'; // Đảm bảo thư viện này đã được cài đặt
+// 
+//
+// import { Header } from 'react-native-elements';
+// 
 
-const App = () => {
+// import Colors from "../constants/Colors";
+// 
+// const App = () => {
+
+
+//   return (
+//     <View style={styles.container}>
+//         <View style={styles.topbarContainer}>
+//           <Topbar />
+//         </View>
+//       <View style={styles.content}>
+//         <ScrollView contentContainerStyle={styles.scrollViewContent}>
+//           
+//         </ScrollView>
+//       </View>
+//     </View>
+     
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   
+// });
+
+// export default App;
+
+
+import { View, Text, Button,TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { useRouter } from "expo-router";
+import Topbar from '../profile/Topbar';
+import Menu from '../components/Menu';
+import SectionRecent from '../components/SectionRecent';
+import CourseRecent from '../profile/CourseRecent';
+import News from '../components/News';
+import { Divider } from 'react-native-paper';
+import { Tabs } from '@ant-design/react-native'; 
+import Colors from "../constants/Colors";
+import Icon from 'react-native-vector-icons/FontAwesome'; // Hoặc thư viện icon bạn sử dụng
+import React, { useState } from 'react';
+
+export default function HomeScreen() {
+    const router = useRouter();
   const [showDetails, setShowDetails] = useState(true);
   const [showDetailsParents, setShowDetailsParents] = useState(false);
   const [showAdress, setShowAdress] = useState(false);
-
+    const goToSettings = () => {
+        router.push('/settings');
+    };
   return (
     <View style={styles.container}>
-      <Header
-        centerComponent={
-          <View style={styles.headerTextContainer}>
-            <Text style={styles.name}>Phạm Tùng Anh</Text>
-          </View>
-        }
-        containerStyle={styles.header}
-        placement="center" // Đảm bảo nội dung được căn giữa
-      />
-      <View style={styles.content}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <Tabs
+      <View style={styles.topbarContainer}>
+        <Topbar />
+      </View>
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+      >
+        <Tabs
             tabs={[
               { title: 'Hồ sơ' },
               { title: 'Lớp học' },
@@ -276,12 +313,8 @@ const App = () => {
             <View style={styles.tabContent}>
             
             <View style={styles.item}>
-              <View style={styles.iconContainer}>
-                <Icon name="book" size={20} color="green" />
-              </View>
-              <View style={styles.textContainer}>
-                <Text style={styles.itemSubText}>Lớp đang học</Text>
-              </View>
+              
+              <CourseRecent />
             </View>
              
             </View>
@@ -291,83 +324,113 @@ const App = () => {
               <Text>Điểm tích luỹ</Text>
             </View>
           </Tabs>
-        </ScrollView>
-      </View>
+      </ScrollView>
     </View>
   );
-};
+}
+
+
+
 
 const styles = StyleSheet.create({
+
+  container: {
+        flex: 1,
+        backgroundColor: '#8B0000', // Màu nền đỏ đậm
+      },
+      header: {
+        backgroundColor: '#8B0000', // Màu nền đỏ đậm
+        borderBottomWidth: 0,
+        height: 80, // Đảm bảo chiều cao đủ để chứa nội dung
+      },
+      headerTextContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%', // Đảm bảo container chiếm toàn bộ chiều cao của Header
+        paddingBottom: 10, // Khoảng cách dưới cho Text
+      },
+      name: {
+        color: 'white', // Màu chữ trắng
+        fontSize: 20,
+        textAlign: 'center', // Căn giữa chữ
+      },
+      content: {
+        backgroundColor: 'white', // Màu trắng
+        flex: 1,
+        paddingHorizontal: 10, // Đảm bảo khoảng cách từ viền trái và phải
+      },
+      scrollViewContent: {
+        flexGrow: 1, // Đảm bảo nội dung của ScrollView có thể cuộn
+      },
+      tabContent: {
+        flex: 1,
+      },
+      item: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10, // Khoảng cách trên và dưới cho từng mục
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        marginHorizontal: 0, // Đảm bảo không có margin ở hai bên
+      },
+      numberIconContainer: {
+        backgroundColor: 'red',
+        borderRadius: 50,
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 10,
+      },
+      numberIconText: {
+        fontSize: 16,
+        color: 'white',
+      },
+      itemText: {
+        fontSize: 16,
+        color: '#333',
+      },
+      itemSubText: {
+        fontSize: 14,
+        color: '#555',
+      },
+      arrowIcon: {
+        marginLeft: 10, // Khoảng cách giữa text và icon
+      },
+      iconContainer: {
+        marginRight: 10, // Khoảng cách giữa icon và text
+      },
+      textContainer: {
+        flex: 1,
+        flexDirection: 'column', // Đặt text theo chiều dọc
+      },
+      topbarContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10,
+        backgroundColor: Colors.white
+      },
   container: {
     flex: 1,
-    backgroundColor: '#8B0000', // Màu nền đỏ đậm
+    backgroundColor: Colors.white,
   },
-  header: {
-    backgroundColor: '#8B0000', // Màu nền đỏ đậm
-    borderBottomWidth: 0,
-    height: 80, // Đảm bảo chiều cao đủ để chứa nội dung
+  divider: {
+    height: 2,
+    marginVertical: 10,
+    backgroundColor: Colors.divider,
   },
-  headerTextContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%', // Đảm bảo container chiếm toàn bộ chiều cao của Header
-    paddingBottom: 10, // Khoảng cách dưới cho Text
-  },
-  name: {
-    color: 'white', // Màu chữ trắng
-    fontSize: 20,
-    textAlign: 'center', // Căn giữa chữ
-  },
-  content: {
-    backgroundColor: 'white', // Màu trắng
-    flex: 1,
-    paddingHorizontal: 10, // Đảm bảo khoảng cách từ viền trái và phải
+  topbarContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    backgroundColor: Colors.white
   },
   scrollViewContent: {
-    flexGrow: 1, // Đảm bảo nội dung của ScrollView có thể cuộn
+    paddingTop: 60, 
   },
-  tabContent: {
-    flex: 1,
-  },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10, // Khoảng cách trên và dưới cho từng mục
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    marginHorizontal: 0, // Đảm bảo không có margin ở hai bên
-  },
-  numberIconContainer: {
-    backgroundColor: 'red',
-    borderRadius: 50,
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 10,
-  },
-  numberIconText: {
-    fontSize: 16,
-    color: 'white',
-  },
-  itemText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  itemSubText: {
-    fontSize: 14,
-    color: '#555',
-  },
-  arrowIcon: {
-    marginLeft: 10, // Khoảng cách giữa text và icon
-  },
-  iconContainer: {
-    marginRight: 10, // Khoảng cách giữa icon và text
-  },
-  textContainer: {
-    flex: 1,
-    flexDirection: 'column', // Đặt text theo chiều dọc
-  },
-});
 
-export default App;
+});
