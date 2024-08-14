@@ -41,9 +41,9 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="contacts"
+        name="messages"
         options={{
-          title: 'Calendar',
+          title: 'Phản hồi',
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <View style={{
@@ -55,9 +55,9 @@ export default function TabsLayout() {
               
             }}>
                {focused ? (
-                 <Entypo name="calendar" size={20} color={color} />
+                 <Ionicons name="chatbox-ellipses" size={20} color={color} />
               ) : (
-                <Feather name="calendar" size={20} color={color} />
+                <Ionicons name="chatbox-ellipses-outline" size={20} color={color} />
               )}
             </View>
           ),

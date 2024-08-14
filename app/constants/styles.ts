@@ -15,13 +15,13 @@ const globalStyles = StyleSheet.create({
   shadow: {
     shadowColor: "#000",
     shadowOffset: {
-        width: 0,
-        height: 2,
+      width: 0,
+      height: 1,
     },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
 
-    elevation: 4,
+    elevation: 2,
     }
 });
 

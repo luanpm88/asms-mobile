@@ -32,16 +32,17 @@
 
 import { View, Text, Button,TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from "expo-router";
-import Topbar from '../profile/Topbar';
+import Topbar from '../components/Topbar';
 import Menu from '../components/Menu';
 import SectionRecent from '../components/SectionRecent';
 import CourseRecent from '../profile/CourseRecent';
 import News from '../components/News';
 import { Divider } from 'react-native-paper';
 import { Tabs } from '@ant-design/react-native'; 
-import Colors from "../constants/Colors";
+
 import Icon from 'react-native-vector-icons/FontAwesome'; // Hoặc thư viện icon bạn sử dụng
 import React, { useState } from 'react';
+import Colors from "../constants/Colors";
 
 export default function HomeScreen() {
     const router = useRouter();
@@ -55,6 +56,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.topbarContainer}>
         <Topbar />
+        
       </View>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
