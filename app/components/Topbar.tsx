@@ -5,17 +5,20 @@ import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import globalStyles from '../constants/styles';
 import Notification from './system/notifications/Notification';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../store/store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store/store';
 import { populateTestNotifications } from '@/app/reducer/features/notifications/notificationsSlice';
+import { useRouter } from 'expo-router';
 
 const Topbar = ({ notificationCount = "9+" }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
   const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
+    // import initial notifications
     dispatch(populateTestNotifications());
   }, [dispatch]);
 
@@ -33,7 +36,13 @@ const Topbar = ({ notificationCount = "9+" }) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => showModal()}
+      // previous version, when press on this icon, show notifications modal
+        // onPress={() => showModal()}
+        onPress={() => {
+          router.push({
+            pathname: '/components/system/notifications/Notification2',
+          })
+        }}
         style={[
           {
             marginRight: 20,
@@ -55,10 +64,11 @@ const Topbar = ({ notificationCount = "9+" }) => {
         </View>
       </TouchableOpacity>
 
-      <Notification
+      {/* Notification modal */}
+      {/* <Notification
         visible={modalVisible}
         onClose={hideModal}
-      />
+      /> */}
     </View>
   );
 };

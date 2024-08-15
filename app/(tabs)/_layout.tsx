@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Tabs } from 'expo-router';
 import Colors from '../constants/Colors';
-import { Feather, AntDesign, Entypo, Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, Entypo, Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 export default function TabsLayout() {
   return (
