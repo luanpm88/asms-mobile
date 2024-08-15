@@ -7,16 +7,13 @@ import globalStyles from '../constants/styles';
 import Notification from './system/notifications/Notification';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store/store';
-import { removeNotification, populateTestNotifications } from '@/app/reducer/features/notifications/notificationsSlice';
+import { populateTestNotifications } from '@/app/reducer/features/notifications/notificationsSlice';
 
 const Topbar = ({ notificationCount = "9+" }) => {
   const [modalVisible, setModalVisible] = useState(false);
-
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
-
   const dispatch: AppDispatch = useDispatch();
-  const notifications = useSelector((state: RootState) => state.notifications.notifications);
 
   useEffect(() => {
     dispatch(populateTestNotifications());

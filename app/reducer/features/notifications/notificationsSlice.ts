@@ -36,7 +36,6 @@ const notificationSlice = createSlice({
 export const { setNotifications, addNotification, removeNotification } = notificationSlice.actions;
 export default notificationSlice.reducer;
 
-// Thunk để thêm dữ liệu test
 export const populateTestNotifications = () => (dispatch: AppDispatch) => {
     const notifications = [
         {
