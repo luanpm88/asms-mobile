@@ -21,8 +21,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: 'Dashboard',
-          headerShown: false,
+          title: '',
+          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <View style={{
               justifyContent: 'center',
@@ -44,7 +44,7 @@ export default function TabsLayout() {
         name="messages"
         options={{
           title: 'Phản hồi',
-          headerShown: false,
+          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <View style={{
               justifyContent: 'center',
@@ -67,7 +67,7 @@ export default function TabsLayout() {
         name="settings"
         options={{
           title: 'Cài đặt',
-          headerShown: false,
+          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <View style={{
               justifyContent: 'center',
@@ -88,8 +88,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
-          headerShown: false,
+          title: 'Trang cá nhân',
+          headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <View style={{
               justifyContent: 'center',
@@ -103,7 +103,6 @@ export default function TabsLayout() {
               ) : (
                 <FontAwesome5 name="user" size={20} color={color} />
               )}
-              
             </View>
           ),
         }}

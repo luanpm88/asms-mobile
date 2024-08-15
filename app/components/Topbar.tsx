@@ -40,7 +40,7 @@ const Topbar = ({ notificationCount = "9+" }) => {
         // onPress={() => showModal()}
         onPress={() => {
           router.push({
-            pathname: '/components/system/notifications/Notification2',
+            pathname: '/(screens)/notification',
           })
         }}
         style={[

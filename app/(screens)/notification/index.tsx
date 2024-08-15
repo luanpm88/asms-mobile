@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 
-export default function Notification2() {
+export default function Notification() {
     return (
         <View>
             <Text>Notification2</Text>
