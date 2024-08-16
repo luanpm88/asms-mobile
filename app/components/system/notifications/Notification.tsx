@@ -1,8 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Pressable, Animated, Dimensions, Easing, ScrollView } from 'react-native';
+import { Text, StyleSheet, Pressable, Animated, Dimensions, Easing, ScrollView } from 'react-native';
 import Colors from '../../../constants/Colors';
 import NotificationItem from './NotificationItem';
-import Entypo from 'react-native-vector-icons/Entypo';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../../store/store';
 import { removeNotification } from '@/app/reducer/features/notifications/notificationsSlice';
@@ -10,7 +9,6 @@ import { removeNotification } from '@/app/reducer/features/notifications/notific
 const { width, height } = Dimensions.get('window');
 const HEADER_HEIGHT = 60;
 const FOOTER_HEIGHT = 60;
-
 const Notification = ({ visible, onClose }: any) => {
   const translateX = useRef(new Animated.Value(-width)).current;
   const dispatch: AppDispatch = useDispatch();

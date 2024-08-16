@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppDispatch } from '@/app/store/store';
+import NotificationClass from '@/app/entities/Notification';
 
-interface Notification {
-    title: string;
-    date: string;
-    info: string;
-    titleIcon?: React.ReactNode;
-    timeIcon?: React.ReactNode;
-}
+// interface Notification {
+//     title: string;
+//     date: string;
+//     info: string;
+//     titleIcon?: React.ReactNode;
+//     timeIcon?: React.ReactNode;
+// }
 
 interface NotificationState {
-    notifications: Notification[];
+    notifications: NotificationClass[];
 }
 
 const initialState: NotificationState = {
@@ -21,10 +22,10 @@ const notificationSlice = createSlice({
     name: 'notifications',
     initialState,
     reducers: {
-        setNotifications: (state, action: PayloadAction<Notification[]>) => {
+        setNotifications: (state, action: PayloadAction<NotificationClass[]>) => {
             state.notifications = action.payload;
         },
-        addNotification: (state, action: PayloadAction<Notification>) => {
+        addNotification: (state, action: PayloadAction<NotificationClass>) => {
             state.notifications.push(action.payload);
         },
         removeNotification: (state, action: PayloadAction<number>) => {
@@ -36,7 +37,6 @@ const notificationSlice = createSlice({
 export const { setNotifications, addNotification, removeNotification } = notificationSlice.actions;
 export default notificationSlice.reducer;
 
-// Thunk để thêm dữ liệu test
 export const populateTestNotifications = () => (dispatch: AppDispatch) => {
     const notifications = [
         {

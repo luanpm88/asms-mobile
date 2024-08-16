@@ -43,8 +43,7 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack
-        >
+        <Stack screenOptions={{ headerShown: false }}>
           {isLoggedIn ? (
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           ) : (
