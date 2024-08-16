@@ -129,7 +129,6 @@ export default function Login() {
 
             <View style={styles.input}>
               <Text style={styles.inputLabel}>Mật khẩu</Text>
-
               <TextInput
                 autoCorrect={false}
                 clearButtonMode="while-editing"
@@ -147,11 +146,10 @@ export default function Login() {
             </View>
 
             <View style={styles.formAction}>
-              <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
+              <TouchableOpacity onPress={() => handleSubmit} style={styles.btn}>
                 <Text style={styles.btnText}>Đăng nhập</Text>
               </TouchableOpacity>
             </View>
-
             <Text style={styles.formLink}>Quên mật khẩu?</Text>
           </View>
 
