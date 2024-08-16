@@ -10,7 +10,7 @@ import { AppDispatch } from '../store/store';
 import { populateTestNotifications } from '@/app/reducer/features/notifications/notificationsSlice';
 import { useRouter } from 'expo-router';
 
-const Topbar = ({ notificationCount = "9+" }) => {
+const Topbar = ({ notificationCount = "9+", name }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
@@ -32,7 +32,7 @@ const Topbar = ({ notificationCount = "9+" }) => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.sub}>Good morning,</Text>
-        <Text style={styles.name}>Pham Tung Anh</Text>
+        <Text style={styles.name}>{name}</Text>
       </View>
 
       <TouchableOpacity

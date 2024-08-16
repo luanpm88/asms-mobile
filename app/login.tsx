@@ -1,47 +1,105 @@
-import React, { useState } from 'react';
+import React from "react";
 import {
   StyleSheet,
-  SafeAreaView,
   View,
   Image,
   Text,
-  Button,
   TouchableOpacity,
   TextInput,
-} from 'react-native';
+  Alert,
+} from "react-native";
+import * as Yup from "yup";
+import { Formik } from "formik";
 import { useRouter } from "expo-router";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
   const router = useRouter();
 
-    const handleLogin = async () => {
-      await AsyncStorage.setItem('userToken', 'dummy-tokens');
-      router.replace('/home');
-    };
-  
-    const handleProfile = async () => {
-      await AsyncStorage.setItem('userToken', 'dummy-token');
-      router.replace('/profile');
-    };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Định dạng email không hợp lệ!")
+      .required("Required"),
+    password: Yup.string()
+      .min(6, "Mật khẩu quá ngắn!")
+      .required("Required"),
+  });
+
+  const handleLogin = async (values) => {
+    console.log(values); 
+    try {
+      const response = await fetch("http://asms.com/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+          rememberMe: values.rememberMe,
+        }),
+      });
+
+      const text = await response.text();
+
+      try {
+        const data = JSON.parse(text);
+        if (response.ok) {
+          await AsyncStorage.setItem("userToken", data.token); 
+          Alert.alert("Login success");
+          console.log(data.user.name);
+          router.push({
+            pathname: "/home",
+            params: {
+              name: data.user.name,
+            },
+          });
+          
+          
+          
+         
+        } else {
+          if (data.errors && data.errors.email) {
+            Alert.alert("Login Failed", data.errors.email);
+          } else {
+            Alert.alert("Login Failed", "An error occurred during login.");
+          }
+        }
+      } catch (jsonError) {
+        console.error("JSON Parse Error:", jsonError);
+        Alert.alert("Login Failed", "An unexpected error occurred.");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      Alert.alert("Login Failed", "An unexpected error occurred.");
+    }
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#Col' }}>
-      <View style={styles.container}>
-        {/* <KeyboardAwareScrollView> */}
+    <Formik
+      initialValues={{ email: "", password: "", rememberMe: false }}
+      validationSchema={validationSchema}
+      onSubmit={handleLogin}
+    >
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+      }) => (
+        <View style={styles.container}>
           <View style={styles.header}>
             <Image
               alt="App Logo"
               resizeMode="contain"
               style={styles.headerImg}
-              source={require("../assets/images/logo.png")} />
+              source={require("../assets/images/logo.png")}
+            />
 
             <Text style={styles.title}>
-              Đăng nhập vào <Text style={{ color: '#075eec' }}>ASMS</Text>
+              Sign in to <Text style={{ color: "#075eec" }}>ASMS</Text>
             </Text>
 
             {/* <Text style={styles.subtitle}>
@@ -58,11 +116,16 @@ export default function Login() {
                 autoCorrect={false}
                 clearButtonMode="while-editing"
                 keyboardType="email-address"
-                onChangeText={email => setForm({ ...form, email })}
-                placeholder="vuminhthu@example.com"
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                placeholder="john@example.com"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
-                value={form.email} />
+                value={values.email}
+              />
+              {touched.email && errors.email && (
+                <Text style={styles.errorText}>{errors.email}</Text>
+              )}
             </View>
 
             <View style={styles.input}>
@@ -71,39 +134,42 @@ export default function Login() {
               <TextInput
                 autoCorrect={false}
                 clearButtonMode="while-editing"
-                onChangeText={password => setForm({ ...form, password })}
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
                 placeholder="********"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
                 secureTextEntry={true}
-                value={form.password} />
+                value={values.password}
+              />
+              {touched.password && errors.password && (
+                <Text style={styles.errorText}>{errors.password}</Text>
+              )}
             </View>
 
             <View style={styles.formAction}>
-              <TouchableOpacity
-                onPress={handleLogin} >
-                <View style={styles.btn}>
-                  <Text style={styles.btnText}>Đăng nhập</Text>
-                </View>
+              <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
+                <Text style={styles.btnText}>Sign in</Text>
               </TouchableOpacity>
             </View>
-                   {/* <Button title="Profile" onPress={handleProfile} /> */}
 
             <Text style={styles.formLink}>Quên mật khẩu?</Text>
           </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            // handle link
-          }}
-          style={{ marginTop: 'auto' }}>
-          <Text style={styles.formFooter}>
-            bạn chưa có tài khoản?{' '}
-            <Text style={{ textDecorationLine: 'underline' }}>Đăng ký</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+          <TouchableOpacity
+            onPress={() => {
+              // handle link
+            }}
+            style={{ marginTop: "auto" }}
+          >
+            <Text style={styles.formFooter}>
+              Don't have an account?{" "}
+              <Text style={{ textDecorationLine: "underline" }}>Sign up</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </Formik>
   );
 }
 
@@ -117,28 +183,26 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 31,
-    fontWeight: '700',
-    color: '#1D2A32',
+    fontWeight: "700",
+    color: "#1D2A32",
     marginBottom: 6,
   },
   subtitle: {
     fontSize: 15,
-    fontWeight: '500',
-    color: '#929292',
+    fontWeight: "500",
+    color: "#929292",
   },
-  /** Header */
   header: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginVertical: 36,
   },
   headerImg: {
     width: 80,
     height: 80,
-    alignSelf: 'center',
+    alignSelf: "center",
     marginBottom: 36,
   },
-  /** Form */
   form: {
     marginBottom: 24,
     paddingHorizontal: 24,
@@ -152,56 +216,58 @@ const styles = StyleSheet.create({
   },
   formLink: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#075eec',
-    textAlign: 'center',
+    fontWeight: "600",
+    color: "#075eec",
+    textAlign: "center",
   },
   formFooter: {
     fontSize: 15,
-    fontWeight: '600',
-    color: '#222',
-    textAlign: 'center',
+    fontWeight: "600",
+    color: "#222",
+    textAlign: "center",
     letterSpacing: 0.15,
   },
-  /** Input */
   input: {
     marginBottom: 16,
   },
   inputLabel: {
     fontSize: 17,
-    fontWeight: '600',
-    color: '#222',
+    fontWeight: "600",
+    color: "#222",
     marginBottom: 8,
   },
   inputControl: {
     height: 50,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingHorizontal: 16,
     borderRadius: 12,
     fontSize: 15,
-    fontWeight: '500',
-    color: '#222',
+    fontWeight: "500",
+    color: "#222",
     borderWidth: 1,
-    borderColor: '#C9D3DB',
-    borderStyle: 'solid',
+    borderColor: "#C9D3DB",
+    borderStyle: "solid",
   },
-  /** Button */
+  errorText: {
+    color: "red",
+    fontSize: 13,
+    marginTop: 4,
+  },
   btn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderWidth: 1,
-    backgroundColor: '#075eec',
-    borderColor: '#075eec',
+    backgroundColor: "#075eec",
+    borderColor: "#075eec",
   },
   btnText: {
     fontSize: 18,
     lineHeight: 26,
-    fontWeight: '600',
-    color: '#fff',
+    fontWeight: "600",
+    color: "#fff",
   },
 });
-
