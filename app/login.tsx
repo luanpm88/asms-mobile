@@ -12,10 +12,10 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ApiUrls from "./api/ApiUrls";
 
 export default function Login() {
   const router = useRouter();
-
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Định dạng email không hợp lệ!")
@@ -26,11 +26,8 @@ export default function Login() {
   });
 
   const handleLogin = async (values: any) => {
-    console.log(values); 
     try {
-      const test = process.env.EXPO_PUBLIC_HOST_NAME;
-      console.log(test);
-      const response = await fetch(`http://${process.env.EXPO_PUBLIC_HOST_NAME}/api/login`, {
+      const response = await fetch(ApiUrls.getLoginUrl(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,17 +43,15 @@ export default function Login() {
 
       try {
         const data = JSON.parse(text);
+
         if (response.ok) {
           await AsyncStorage.setItem("userToken", data.token); 
-          Alert.alert("Đăng nhập thành công");
-          console.log(data.user.name);
           router.push({
             pathname: "/home",
             params: {
               name: data.user.name,
             },
           });
-         
         } else {
           if (data.errors && data.errors.email) {
             Alert.alert("Đăng nhập thất bại!", data.errors.email);
@@ -100,10 +95,6 @@ export default function Login() {
             <Text style={styles.title}>
               Đăng nhập vào <Text style={{ color: "#075eec" }}>ASMS</Text>
             </Text>
-
-            {/* <Text style={styles.subtitle}>
-              Get access to your portfolio and more
-            </Text> */}
           </View>
 
           <View style={styles.form}>
@@ -146,7 +137,7 @@ export default function Login() {
             </View>
 
             <View style={styles.formAction}>
-              <TouchableOpacity onPress={() => handleSubmit} style={styles.btn}>
+              <TouchableOpacity onPress={() => handleSubmit()} style={styles.btn}>
                 <Text style={styles.btnText}>Đăng nhập</Text>
               </TouchableOpacity>
             </View>
