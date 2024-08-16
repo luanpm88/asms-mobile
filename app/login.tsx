@@ -28,6 +28,7 @@ export default function Login() {
       await AsyncStorage.setItem('userToken', 'dummy-token');
       router.replace('/profile');
     };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#Col' }}>
       <View style={styles.container}>
@@ -40,17 +41,17 @@ export default function Login() {
               source={require("../assets/images/logo.png")} />
 
             <Text style={styles.title}>
-              Sign in to <Text style={{ color: '#075eec' }}>ASMS</Text>
+              Đăng nhập vào <Text style={{ color: '#075eec' }}>ASMS</Text>
             </Text>
 
-            <Text style={styles.subtitle}>
+            {/* <Text style={styles.subtitle}>
               Get access to your portfolio and more
-            </Text>
+            </Text> */}
           </View>
 
           <View style={styles.form}>
             <View style={styles.input}>
-              <Text style={styles.inputLabel}>Email address</Text>
+              <Text style={styles.inputLabel}>E-mail</Text>
 
               <TextInput
                 autoCapitalize="none"
@@ -58,14 +59,14 @@ export default function Login() {
                 clearButtonMode="while-editing"
                 keyboardType="email-address"
                 onChangeText={email => setForm({ ...form, email })}
-                placeholder="john@example.com"
+                placeholder="vuminhthu@example.com"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
                 value={form.email} />
             </View>
 
             <View style={styles.input}>
-              <Text style={styles.inputLabel}>Password</Text>
+              <Text style={styles.inputLabel}>Mật khẩu</Text>
 
               <TextInput
                 autoCorrect={false}
@@ -82,13 +83,13 @@ export default function Login() {
               <TouchableOpacity
                 onPress={handleLogin} >
                 <View style={styles.btn}>
-                  <Text style={styles.btnText}>Sign in</Text>
+                  <Text style={styles.btnText}>Đăng nhập</Text>
                 </View>
               </TouchableOpacity>
             </View>
                    {/* <Button title="Profile" onPress={handleProfile} /> */}
 
-            <Text style={styles.formLink}>Forgot password?</Text>
+            <Text style={styles.formLink}>Quên mật khẩu?</Text>
           </View>
 
         <TouchableOpacity
@@ -97,8 +98,8 @@ export default function Login() {
           }}
           style={{ marginTop: 'auto' }}>
           <Text style={styles.formFooter}>
-            Don't have an account?{' '}
-            <Text style={{ textDecorationLine: 'underline' }}>Sign up</Text>
+            bạn chưa có tài khoản?{' '}
+            <Text style={{ textDecorationLine: 'underline' }}>Đăng ký</Text>
           </Text>
         </TouchableOpacity>
       </View>
