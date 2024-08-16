@@ -1,5 +1,4 @@
-import { View, Text, Button, StyleSheet, ScrollView, Modal } from 'react-native';
-import { useRouter } from "expo-router";
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Topbar from '../components/Topbar';
 import Slider from '../components/Slider';
 import Menu from '../components/Menu';
@@ -7,37 +6,23 @@ import SectionRecent from '../components/SectionRecent';
 import CourseRecent from '../components/CourseRecent';
 import News from '../components/News';
 import Share from '../components/Share';
-import { Divider } from 'react-native-paper';
 import Colors from "../constants/Colors";
-
 import { useLocalSearchParams } from "expo-router";
 
-
 export default function HomeScreen() {
-    const router = useRouter();
-    const { name } = useLocalSearchParams();
+  const { name } = useLocalSearchParams();
+  const displayName = Array.isArray(name) ? name[0] : name || "User";
 
-
-
-    const goToSettings = () => {
-        router.push('/settings');
-    };
   return (
     <View style={styles.container}>
       <View style={styles.topbarContainer}>
-        <Topbar name={name} />
+        <Topbar name={displayName} />
       </View>
-      <ScrollView
-        contentContainerStyle={styles.scrollViewContent}
-      >
-        {/* <Divider style={styles.divider} /> */}
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Slider />
         <Menu />
-        {/* <Divider style={{ ...styles.divider, height: 4 }} /> */}
         <SectionRecent />
-        {/* <Divider style={{ ...styles.divider, height: 4 }} /> */}
         <CourseRecent />
-        {/* <Divider style={{ ...styles.divider, height: 4 }} /> */}
         <News />
         <Share />
       </ScrollView>
@@ -66,5 +51,4 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     paddingTop: 60, 
   },
-
 });

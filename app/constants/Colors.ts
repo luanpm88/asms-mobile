@@ -15,6 +15,5 @@ export default {
     bgCard: '#F3F6FB',
     'gray': '#bcbcbc',
     'borderColor': '#f0f0f0'
-    
   }
   

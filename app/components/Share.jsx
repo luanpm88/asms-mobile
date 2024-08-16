@@ -2,22 +2,14 @@ import React from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
-  ScrollView,
   Dimensions,
-  Image,
-  EvilIcons
 } from "react-native";
-import { FontAwesome, FontAwesome6, AntDesign, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import globalStyles from "../constants/styles";
 
-
-
 const viewportWidth = Dimensions.get("window").width;
-
-
 const News = () => {
   return (
     <View style={styles.container}>

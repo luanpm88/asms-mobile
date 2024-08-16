@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import Colors from "../constants/Colors";
 import globalStyles from '../constants/styles'
+
 const categories = [
   { id: '1', title: 'Thời khóa biểu', iconName: require('../../assets/images/clock.png')},
   { id: '2', title: 'Khóa học', iconName: require('../../assets/images/class.png')},

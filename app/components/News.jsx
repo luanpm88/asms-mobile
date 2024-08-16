@@ -2,9 +2,7 @@ import React from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
-  ScrollView,
   Dimensions,
   Image,
 } from "react-native";
