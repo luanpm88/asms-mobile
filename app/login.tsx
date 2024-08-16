@@ -19,13 +19,13 @@ export default function Login() {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Định dạng email không hợp lệ!")
-      .required("Required"),
+      .required("Vui lòng nhập email!"),
     password: Yup.string()
       .min(6, "Mật khẩu quá ngắn!")
-      .required("Required"),
+      .required("Vui lòng nhập mật khẩu!"),
   });
 
-  const handleLogin = async (values) => {
+  const handleLogin = async (values: any) => {
     console.log(values); 
     try {
       const response = await fetch("http://asms.com/api/login", {
@@ -46,7 +46,7 @@ export default function Login() {
         const data = JSON.parse(text);
         if (response.ok) {
           await AsyncStorage.setItem("userToken", data.token); 
-          Alert.alert("Login success");
+          Alert.alert("Đăng nhập thành công");
           console.log(data.user.name);
           router.push({
             pathname: "/home",
@@ -54,24 +54,21 @@ export default function Login() {
               name: data.user.name,
             },
           });
-          
-          
-          
          
         } else {
           if (data.errors && data.errors.email) {
-            Alert.alert("Login Failed", data.errors.email);
+            Alert.alert("Đăng nhập thất bại!", data.errors.email);
           } else {
-            Alert.alert("Login Failed", "An error occurred during login.");
+            Alert.alert("Đăng nhập thất bại!", "An error occurred during login.");
           }
         }
       } catch (jsonError) {
         console.error("JSON Parse Error:", jsonError);
-        Alert.alert("Login Failed", "An unexpected error occurred.");
+        Alert.alert("Đăng nhập thất bại!", "An unexpected error occurred.");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      Alert.alert("Login Failed", "An unexpected error occurred.");
+      Alert.alert("Đăng nhập thất bại!", "An unexpected error occurred.");
     }
   };
 
@@ -99,7 +96,7 @@ export default function Login() {
             />
 
             <Text style={styles.title}>
-              Sign in to <Text style={{ color: "#075eec" }}>ASMS</Text>
+              Đăng nhập vào <Text style={{ color: "#075eec" }}>ASMS</Text>
             </Text>
 
             {/* <Text style={styles.subtitle}>
@@ -149,7 +146,7 @@ export default function Login() {
 
             <View style={styles.formAction}>
               <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
-                <Text style={styles.btnText}>Sign in</Text>
+                <Text style={styles.btnText}>Đăng nhập</Text>
               </TouchableOpacity>
             </View>
 
@@ -163,8 +160,8 @@ export default function Login() {
             style={{ marginTop: "auto" }}
           >
             <Text style={styles.formFooter}>
-              Don't have an account?{" "}
-              <Text style={{ textDecorationLine: "underline" }}>Sign up</Text>
+              Bạn chưa có tài khoản?{" "}
+              <Text style={{ textDecorationLine: "underline" }}>Đăng ký</Text>
             </Text>
           </TouchableOpacity>
         </View>
