@@ -28,7 +28,7 @@ export default function Login() {
   const handleLogin = async (values: any) => {
     console.log(values); 
     try {
-      const response = await fetch("http://asms.com/api/login", {
+      const response = await fetch(`http:/${process.env.HOST_NAME}//api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
