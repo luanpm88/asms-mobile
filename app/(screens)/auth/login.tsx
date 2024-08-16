@@ -12,7 +12,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ApiUrls from "./api/ApiUrls";
+import ApiUrls from "../../entities/api/ApiUrls";
 
 export default function Login() {
   const router = useRouter();
@@ -89,7 +89,7 @@ export default function Login() {
               alt="App Logo"
               resizeMode="contain"
               style={styles.headerImg}
-              source={require("../assets/images/logo.png")}
+              source={require("../../../assets/images/logo.png")}
             />
 
             <Text style={styles.title}>

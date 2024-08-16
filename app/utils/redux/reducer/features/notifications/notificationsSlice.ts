@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppDispatch } from '@/app/store/store';
+import { AppDispatch } from '@/app/utils/redux/store/store';
 import NotificationClass from '@/app/entities/Notification';
 
 // interface Notification {

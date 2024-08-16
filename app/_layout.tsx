@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import { store } from './store/store'
+import { store } from './utils/redux/store/store'
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
@@ -27,7 +27,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (isFocused) {
       if (isLoggedIn === false) {
-        router.replace('/login');
+        router.replace('/(screens)/auth/login');
       } else if (isLoggedIn === true) {
         router.replace('./(tabs)/home'); // Đổi thành đường dẫn chính sau khi đăng nhập
       }

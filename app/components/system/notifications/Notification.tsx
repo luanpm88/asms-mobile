@@ -3,8 +3,8 @@ import { Text, StyleSheet, Pressable, Animated, Dimensions, Easing, ScrollView }
 import Colors from '../../../constants/Colors';
 import NotificationItem from './NotificationItem';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../../store/store';
-import { removeNotification } from '@/app/reducer/features/notifications/notificationsSlice';
+import { RootState, AppDispatch } from '../../../utils/redux/store/store';
+import { removeNotification } from '@/app/utils/redux/reducer/features/notifications/notificationsSlice';
 
 const { width, height } = Dimensions.get('window');
 const HEADER_HEIGHT = 60;
