@@ -21,7 +21,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: '',
+          title: 'Trang chủ',
           headerShown: true,
           tabBarIcon: ({ color, focused }) => (
             <View style={{
