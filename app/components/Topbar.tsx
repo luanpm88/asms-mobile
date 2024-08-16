@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store/store';
 import { removeNotification, populateTestNotifications } from '@/app/reducer/features/notifications/notificationsSlice';
 
-const Topbar = ({ notificationCount = "9+" }) => {
+const Topbar = ({ notificationCount = "9+", name }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const showModal = () => setModalVisible(true);
@@ -32,7 +32,7 @@ const Topbar = ({ notificationCount = "9+" }) => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.sub}>Good morning,</Text>
-        <Text style={styles.name}>Pham Tung Anh</Text>
+        <Text style={styles.name}>{name}</Text>
       </View>
 
       <TouchableOpacity

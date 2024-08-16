@@ -10,8 +10,14 @@ import Share from '../components/Share';
 import { Divider } from 'react-native-paper';
 import Colors from "../constants/Colors";
 
+import { useLocalSearchParams } from "expo-router";
+
+
 export default function HomeScreen() {
     const router = useRouter();
+    const { name } = useLocalSearchParams();
+
+
 
     const goToSettings = () => {
         router.push('/settings');
@@ -19,7 +25,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.topbarContainer}>
-        <Topbar />
+        <Topbar name={name} />
       </View>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
