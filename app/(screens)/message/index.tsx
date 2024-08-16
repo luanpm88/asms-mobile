@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store/store';
 import Conversation from '@/app/components/message/Conversation';
 
-export default function Notification() {
+export default function Message() {
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             <Conversation />
         </View>
     );

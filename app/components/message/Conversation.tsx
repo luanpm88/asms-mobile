@@ -9,7 +9,7 @@ import Colors from '../../constants/Colors';
 const ConversationScreen = () => {
 
     const router = useRouter();
-  const { name, phone, img } = useLocalSearchParams(); 
+  const { user_id, name, phone, img } = useLocalSearchParams(); 
   
   const messagesContent = [
     {
@@ -180,9 +180,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20, 
   },
   inputToolbar: {
-    backgroundColor: '#fff',
-    // borderTopWidth: 1,
-    // borderTopColor: '#ddd',
+    backgroundColor: '#fff', 
     paddingTop: -5,
   },
   sendButton: {
@@ -196,5 +194,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
 
 export default ConversationScreen;

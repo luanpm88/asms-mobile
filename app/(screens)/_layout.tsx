@@ -10,6 +10,13 @@ export default function ScreensLayout() {
                     title: "Thông báo"
                 }}
             />
+            <Stack.Screen 
+                name="message/index" 
+                options={{
+                    headerShown: true,
+                    title: "Tin nhắn"
+                }}
+            />
         </Stack>
     );
 }

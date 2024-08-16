@@ -28,7 +28,7 @@ export default function Login() {
   const handleLogin = async (values: any) => {
     console.log(values); 
     try {
-      const response = await fetch(`http:/${process.env.HOST_NAME}//api/login`, {
+      const response = await fetch(`https:/asms-americanstudy.com/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +74,11 @@ export default function Login() {
 
   return (
     <Formik
-      initialValues={{ email: "", password: "", rememberMe: false }}
+      initialValues={{ 
+        email: "thuvm@hoangkhang.com.vn", 
+        password: "12345678", 
+        rememberMe: false 
+      }}
       validationSchema={validationSchema}
       onSubmit={handleLogin}
     >
@@ -118,7 +122,7 @@ export default function Login() {
                 placeholder="john@example.com"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
-                value={values.email}
+                value={values.email }
               />
               {touched.email && errors.email && (
                 <Text style={styles.errorText}>{errors.email}</Text>
@@ -137,7 +141,7 @@ export default function Login() {
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
                 secureTextEntry={true}
-                value={values.password}
+                value={values.password }
               />
               {touched.password && errors.password && (
                 <Text style={styles.errorText}>{errors.password}</Text>
