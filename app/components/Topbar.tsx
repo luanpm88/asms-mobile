@@ -1,19 +1,19 @@
-// Topbar.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import globalStyles from '../constants/styles';
-import Notification from './system/notifications/Notification';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../store/store';
 import { populateTestNotifications } from '@/app/reducer/features/notifications/notificationsSlice';
 import { useRouter } from 'expo-router';
 
-const Topbar = ({ notificationCount = "9+", name }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const showModal = () => setModalVisible(true);
-  const hideModal = () => setModalVisible(false);
+interface TopbarProps {
+  notificationCount?: string;
+  name: string;
+}
+
+const Topbar: React.FC<TopbarProps> = ({ notificationCount = "9+", name }) => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
@@ -36,8 +36,6 @@ const Topbar = ({ notificationCount = "9+", name }) => {
       </View>
 
       <TouchableOpacity
-      // previous version, when press on this icon, show notifications modal
-        // onPress={() => showModal()}
         onPress={() => {
           router.push({
             pathname: '/(screens)/notification',
@@ -49,13 +47,12 @@ const Topbar = ({ notificationCount = "9+", name }) => {
             backgroundColor: Colors.white,
             padding: 10,
             borderRadius: 50,
-            // Inline shadow styles
             shadowColor: "#E5E4E4",
             shadowOffset: { width: 2, height: 4 },
             shadowOpacity: 0.2,
             shadowRadius: 3,
           },
-          globalStyles.shadow, // Import shadow styles from globalStyles
+          globalStyles.shadow,
         ]}
       >
         <Feather name="bell" size={24} color={Colors.black} />
@@ -63,12 +60,6 @@ const Topbar = ({ notificationCount = "9+", name }) => {
           <Text style={styles.badgeText}>{notificationCount}</Text>
         </View>
       </TouchableOpacity>
-
-      {/* Notification modal */}
-      {/* <Notification
-        visible={modalVisible}
-        onClose={hideModal}
-      /> */}
     </View>
   );
 };

@@ -1,11 +1,9 @@
 import React from 'react';
 import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
-import Colors from "../constants/Colors";
 import globalStyles from '../constants/styles'
 
 const { width: viewportWidth } = Dimensions.get('window');
-
 const data = [
   {
     title: '1',
@@ -24,7 +22,6 @@ const data = [
 const renderItem = ({ item }) => (
   <View style={styles.slide}>
     <Image source={{ uri: item.uri }} style={[globalStyles.shadow, styles.image]}/>
-    
   </View>
 );
 

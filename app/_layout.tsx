@@ -3,14 +3,12 @@ import { store } from './store/store'
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { populateTestNotifications } from "./reducer/features/notifications/notificationsSlice";
 
 import { useIsFocused } from '@react-navigation/native';
 export default function RootLayout() {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const isFocused = useIsFocused();
   useEffect(() => {
     const checkLogin = async () => {
