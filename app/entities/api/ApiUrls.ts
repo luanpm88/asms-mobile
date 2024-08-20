@@ -1,7 +1,10 @@
 class ApiUrls {
-    private static readonly BASE_URL = `${process.env.EXPO_PUBLIC_HOST_NAME}/api`;
-    private static readonly LOGIN = `${ApiUrls.BASE_URL}/login`;
-    private static readonly REGISTER = `${ApiUrls.BASE_URL}/register`;
+    // private static readonly BASE_URL = `${process.env.EXPO_PUBLIC_HOST_NAME}/api`;
+    // private static readonly BASE_URL = `192.168.2.169/api`;
+    private static readonly BASE_URL = `https://asms-americanstudy.com/api`;
+    private static readonly LOGIN = `${this.BASE_URL}/login`;
+    private static readonly LOGOUT = `${this.BASE_URL}/logout`;
+    private static readonly REGISTER = `${this.BASE_URL}/register`;
 
     public static getBaseUrl(): string {
         return this.BASE_URL;
@@ -12,7 +15,7 @@ class ApiUrls {
     }
 
     public static getLogOutUrl(): string {
-        return '';
+        return this.LOGOUT;
     }
 
     public static getRegisterUrl(): string {

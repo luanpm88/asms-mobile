@@ -10,6 +10,15 @@ export default function ScreensLayout() {
                     title: "Thông báo"
                 }}
             />
+            <Stack.Screen 
+                name="login/index" 
+                options={{
+                    headerShown: false,
+                    title: "Đăng nhập",
+                    headerStyle: {
+                    }
+                }}
+            />
         </Stack>
     );
 }

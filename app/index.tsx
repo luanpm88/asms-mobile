@@ -1,34 +1,37 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useState, useEffect } from "react";
+import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "./utils/redux/reducer/features/auth/authSlice";
 
-export default function Page() {
-  return (
-    <View style={styles.container}>
-      <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
-      </View>
-    </View>
-  );
-}
+const App = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    padding: 24,
-  },
-  main: {
-    flex: 1,
-    justifyContent: "center",
-    maxWidth: 960,
-    marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
-  },
-});
+  useEffect(() => {
+    const checkLogin = async () => {
+      const token = await AsyncStorage.getItem('token');
+
+      if (token) {
+        dispatch(loginSuccess(token));
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkLogin();
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isLoggedIn === false) {
+      router.replace('/(screens)/login');
+    } else if (isLoggedIn === true) {
+      router.replace('./(tabs)/home');
+    }
+  }, [isLoggedIn, router]);
+
+};
+
+export default App;
