@@ -1,15 +1,19 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
+import ApiUrls from '@/app/entities/api/ApiUrls';
+import axios from 'axios';
 
 interface AuthState {
-    token: string | null;
+    tokenKey: string,
     isLoading: boolean;
-    error: string | null;
+    errorMessage: string | null;
 };
 
 const initialState: AuthState = {
-    token: null,
+    tokenKey: "authToken",
     isLoading: false,
-    error: null
+    errorMessage: null
 };
 
 const authSlice = createSlice({
@@ -20,19 +24,45 @@ const authSlice = createSlice({
             state.isLoading = true;
         },
         loginSuccess: (state, action: PayloadAction<string>) => {
-            state.token = action.payload;
+            AsyncStorage.setItem(state.tokenKey, action.payload);
             state.isLoading = false;
-            state.error = null;
+            state.errorMessage = null;
         },
         loginFailure: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
-            state.error = action.payload;
+            state.errorMessage = action.payload;
+            Alert.alert(state.errorMessage);
         },
-        logout: state => {
-            state.token = null;
+        logoutSuccess: state => {
+            state.isLoading = false;
+            state.errorMessage = null;
+        },
+    },
+});
+
+export const logout = createAsyncThunk('auth/logout', async(_, { dispatch }) => {
+    try {
+        const token = await AsyncStorage.getItem('authToken');
+        const response = await axios.post(ApiUrls.getLogOutUrl(), {}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        console.log(response)
+
+        if (response.data.status === 200) {
+            await AsyncStorage.removeItem('authToken');
+            dispatch(authSlice.actions.logoutSuccess());
+        } else {
+            throw new Error('Logout failed on server!');
         }
+    } catch (error) {
+        Alert.alert("Có lỗi xảy ra khi đăng xuất!");
+        console.error('Logout error: ', error);
     }
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailure } = authSlice.actions;
+export const authActions = authSlice.actions;
 export default authSlice.reducer;

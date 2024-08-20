@@ -1,130 +1,83 @@
-import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Alert,
-} from "react-native";
-import axios from "axios";
-import ApiUrls from "@/app/entities/api/ApiUrls";
-import { useDispatch } from "react-redux";
-import { loginSuccess } from "@/app/utils/redux/reducer/features/auth/authSlice";
+import { View, SafeAreaView, StyleSheet, Button, Platform, Image, Text, TouchableOpacity } from "react-native";
+import { useState, useContext } from "react";
+import FormTextField from "@/app/components/FormTextField";
+import { loadUser, login } from "@/app/services/AuthService";
 import { useRouter } from "expo-router";
+import AuthContext from "@/app/contexts/AuthContext";
 
-export default function Login() {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState("");
-    const [token, setToken] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const router = useRouter();
-    const dispatch = useDispatch();
-    const handleEmailChange = (text: string) => setEmail(text);
-    const handlePasswordChange = (text: string) => setPassword(text);
-    const handleLogin = async () => {
-        try {
-            const response = await axios.post(ApiUrls.getLoginUrl(), {
-                email, password
-            });
+export default function() {
+  interface ErrorsProps {
+    email?: [],
+    password?: [],
+  }
 
-            if (response.data.status === 200) {
-                setToken(response.data.token);
-            } else {
-                Alert.alert("Đăng nhập thất bại!");
-            }
-        } catch (error) {
-            console.error(error);
-            Alert.alert("Đăng nhập thất bại!");
-        }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { setUser } = useContext(AuthContext);
+  const [errors, setErrors] = useState<ErrorsProps>({});
+  const router = useRouter();
+
+  async function handleLogin() {
+    try {
+      await login({
+        email, password, device_name: `${Platform.OS} ${Platform.Version}`
+      })
+
+      const user = await loadUser();
+      setUser(user);
+    } catch (e: any) {
+      if (e.response?.status === 422) {
+        setErrors(e.response.data.errors);
+      }
     }
+  }
 
-    useEffect(() => {
-        if (token) {
-            dispatch(loginSuccess(token));
-            setIsLoggedIn(true);
-        }
-    }, [token]);
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            router.replace('/(tabs)/home');
-        }
-    }, [isLoggedIn])
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Image
-                alt="App Logo"
-                resizeMode="contain"
-                style={styles.headerImg}
-                source={require("../../../assets/images/logo.png")}
-                />
-                <Text style={styles.title}>
-                Đăng nhập vào <Text style={{ color: "#075eec" }}>ASMS</Text>
-                </Text>
-            </View>
-
-            <View style={styles.form}>
-                <View style={styles.input}>
-                <Text style={styles.inputLabel}>E-mail</Text>
-                <TextInput
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    clearButtonMode="while-editing"
-                    keyboardType="email-address"
-                    onChangeText={handleEmailChange}
-                    onBlur={() => {}}
-                    placeholder="john@example.com"
-                    placeholderTextColor="#6b7280"
-                    style={styles.inputControl}
-                />
-                </View>
-
-                <View style={styles.input}>
-                <Text style={styles.inputLabel}>Mật khẩu</Text>
-                <TextInput
-                    autoCorrect={false}
-                    clearButtonMode="while-editing"
-                    placeholder="********"
-                    placeholderTextColor="#6b7280"
-                    style={styles.inputControl}
-                    secureTextEntry={true}
-                    onChangeText={handlePasswordChange}
-                />
-                </View>
-
-                <View style={styles.formAction}>
-                <TouchableOpacity onPress={() => handleLogin()} style={styles.btn}>
-                    <Text style={styles.btnText}>Đăng nhập</Text>
-                </TouchableOpacity>
-                </View>
-                <Text style={styles.formLink}>Quên mật khẩu?</Text>
-            </View>
-
-            <TouchableOpacity
-                onPress={() => {
-                }}
-                style={{ marginTop: "auto" }}
-            >
-                <Text style={styles.formFooter}>
-                Bạn chưa có tài khoản?{" "}
-                <Text style={{ textDecorationLine: "underline" }}>Đăng ký</Text>
-                </Text>
-            </TouchableOpacity>
-            </View>
-    );
-}
+  return (
+    <SafeAreaView style={styles.wrapper}>
+      <View style={styles.header}>
+        <Image
+          alt="App Logo"
+          resizeMode="contain"
+          style={styles.headerImg}
+          source={require("../../../assets/images/logo.png")}
+        />
+        <Text style={styles.title}>
+          Đăng nhập vào <Text style={{ color: "#075eec" }}>ASMS</Text>
+        </Text>
+      </View>
+      <View style={styles.container}>
+        <FormTextField 
+          label="Email:" 
+          value={email} 
+          onChangeText={(text: string) => setEmail(text)} 
+          keyboardType="email-address"
+          errors={errors.email}
+        />
+        <FormTextField 
+          label="Password:" 
+          secureTextEntry={true} 
+          value={password} 
+          onChangeText={(text: string) => setPassword(text)} 
+          errors={errors.password}
+        />
+        <TouchableOpacity style={styles.btn} onPress={handleLogin}>
+          <Text style={styles.btnText}>Đăng nhập</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: "#fff",
+    flex: 1
+  },
   container: {
-    paddingVertical: 24,
-    paddingHorizontal: 0,
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
+    paddingTop: 50,
+    paddingLeft: 20, 
+    paddingRight: 20, 
+    rowGap: 16,
   },
   title: {
     fontSize: 31,
