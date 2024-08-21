@@ -3,6 +3,7 @@ import axios from "../utils/axios";
 import { getToken, setToken } from "./TokenService";
 
 interface CredentialsProps {
+  
   email: string, 
   password: string, 
   device_name: string
@@ -17,9 +18,6 @@ export async function login(credentials: CredentialsProps) {
 export async function loadUser() {
   const token = await getToken();
   const { data: user } = await axios.get(AuthUrlsManager.USER_SUFFIX, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
   });
 
   return user;
@@ -27,11 +25,7 @@ export async function loadUser() {
 
 export async function logout() {
   const token = await getToken();
-
   const response = await axios.post(AuthUrlsManager.LOGOUT_SUFFIX, {}, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
   })
 
   await setToken(null);

@@ -1,6 +1,7 @@
 import ApiUrlsManager from "./ApiUrlsManager";
 
 class AuthUrlsManager extends ApiUrlsManager {
+    
     public static readonly LOGIN_SUFFIX = "/login";
     public static readonly LOGOUT_SUFFIX = "/logout";
     public static readonly REGISTER_SUFFIX = "/register";

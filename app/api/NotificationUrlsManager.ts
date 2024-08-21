@@ -1,6 +1,7 @@
 import ApiUrlsManager from "./ApiUrlsManager";
 
 class NotificationUrlsManager extends ApiUrlsManager {
+    
     public static readonly INDEX_SUFFIX = "/";
 
     public static getNotifications(type: string = "all"): string {

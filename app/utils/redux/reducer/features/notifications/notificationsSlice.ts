@@ -3,6 +3,7 @@ import { AppDispatch } from '@/app/utils/redux/store/store';
 import NotificationClass from '@/app/entities/Notification';
 
 interface NotificationState {
+    
     notifications: NotificationClass[];
 }
 

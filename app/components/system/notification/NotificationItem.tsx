@@ -7,6 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '@/app/constants/Colors';
 
 interface NotificationProps {
+    
     notification: Notification;
     onDelete?: () => void;
 }

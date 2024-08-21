@@ -7,6 +7,7 @@ import AuthContext from "@/app/contexts/AuthContext";
 
 export default function() {
   interface ErrorsProps {
+    
     email?: [],
     password?: [],
   }

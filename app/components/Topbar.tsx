@@ -9,6 +9,7 @@ import { populateTestNotifications } from '@/app/utils/redux/reducer/features/no
 import { useRouter } from 'expo-router';
 
 interface TopbarProps {
+  
   notificationCount: string;
   name: string;
 }
