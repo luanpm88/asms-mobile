@@ -54,9 +54,16 @@ const ConversationScreen = () => {
   //     push(messagesRef, systemReply);
   //   });
   // }, [user_id]);
-
+  const axiosInstance = axios.create({
+    baseURL: 'http://asms.com/api',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer YOUR_ACCESS_TOKEN`,
+    },
+  });
 useEffect(() => {
-  axios.get(`http://asms.com/api/messages/${user_id}`)
+  
+  axiosInstance.get(`/messages/${user_id}`)
     .then(response => {
       const loadedMessages = response.data.map(message => ({
         _id: message.id,
