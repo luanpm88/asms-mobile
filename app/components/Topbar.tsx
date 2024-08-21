@@ -18,10 +18,10 @@ const Topbar = ({ notificationCount = "9+", name }: TopbarProps) => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    // import initial notifications
-    dispatch(populateTestNotifications());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // import initial notifications
+  //   dispatch(populateTestNotifications());
+  // }, [dispatch]);
 
   return (
     <View style={styles.container}>
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.colorText,
     fontWeight: "700",
-    // fontFamily: 'custom-font',
   },
   sub: {
     flex: 1,

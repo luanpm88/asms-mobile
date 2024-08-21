@@ -1,22 +1,26 @@
-let token: (string | null) = null;
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export async function setToken(newToken: string | null) {
-    token = newToken;
+class TokenService {
+    private static token: string | null = null;
 
-    if (token !== null) {
-        await AsyncStorage.setItem("token", token);
-    } else {
-        await AsyncStorage.removeItem("token");
+    static async setToken(newToken: string | null) {
+        this.token = newToken;
+
+        if (this.token !== null) {
+            await AsyncStorage.setItem("token", this.token);
+        } else {
+            await AsyncStorage.removeItem("token");
+        }
+    }
+
+    static async getToken(): Promise<string | null> {
+        if (this.token !== null) {
+            return this.token;
+        }
+
+        this.token = await AsyncStorage.getItem("token");
+        return this.token;
     }
 }
 
-export async function getToken() {
-    if (token !== null) {
-        return token;
-    }
-
-    token = await AsyncStorage.getItem("token");
-    
-    return token;
-}
+export default TokenService;

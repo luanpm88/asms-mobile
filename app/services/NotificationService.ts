@@ -1,8 +1,13 @@
-import axios from "../utils/axios";
+// NotificationService.ts
+import ASMSApiClient from "../utils/ASMSApiClient";
 import NotificationUrlsManager from "../api/NotificationUrlsManager";
 
-export async function getAll() {
-    const { data } = await axios.get(NotificationUrlsManager.getNotifications());
+class NotificationService {
     
-    return data;
+    static async fetchNotificationsByType(type: string = NotificationUrlsManager.TYPE_ALL) {
+        const { data } = await ASMSApiClient.get(NotificationUrlsManager.getNotifications(type));
+        return data;
+    }
 }
+
+export default NotificationService;

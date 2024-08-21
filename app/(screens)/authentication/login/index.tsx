@@ -1,13 +1,12 @@
 import { View, SafeAreaView, StyleSheet, Button, Platform, Image, Text, TouchableOpacity } from "react-native";
 import { useState, useContext } from "react";
 import FormTextField from "@/app/components/FormTextField";
-import { loadUser, login } from "@/app/services/AuthService";
+import AuthService from "@/app/services/AuthService";
 import { useRouter } from "expo-router";
 import AuthContext from "@/app/contexts/AuthContext";
 
 export default function() {
   interface ErrorsProps {
-    
     email?: [],
     password?: [],
   }
@@ -20,11 +19,12 @@ export default function() {
 
   async function handleLogin() {
     try {
-      await login({
-        email, password, device_name: `${Platform.OS} ${Platform.Version}`
+      await AuthService.login({
+        email, password, deviceName: `${Platform.OS} ${Platform.Version}`
       })
 
-      const user = await loadUser();
+      const user = await AuthService.loadUser();
+      
       setUser(user);
     } catch (e: any) {
       if (e.response?.status === 422) {

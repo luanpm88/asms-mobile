@@ -1,19 +1,19 @@
 import React, { useContext, useState } from 'react';
-import {
-    StyleSheet,
-    SafeAreaView,
-    ScrollView,
-    View,
-    Text,
-    TouchableOpacity,
-    Switch,
-    Image,
-} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { useRouter } from 'expo-router';
-import { logout } from '../services/AuthService';
+import AuthService from '../services/AuthService';
 import AuthContext from '../contexts/AuthContext';
+import {
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  Switch,
+  Image,
+} from 'react-native';
 
 export default function Example() {
     const router = useRouter();
@@ -24,7 +24,7 @@ export default function Example() {
     });
 
     async function signOut() {
-      await logout();
+      await AuthService.logout();
       if (setUser) {
           setUser(null);
       } else {

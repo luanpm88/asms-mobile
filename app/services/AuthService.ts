@@ -1,33 +1,29 @@
 import AuthUrlsManager from "../api/AuthUrlsManager";
-import axios from "../utils/axios";
-import { getToken, setToken } from "./TokenService";
+import ASMSApiClient from "../utils/ASMSApiClient";
+import TokenService from "./TokenService";
 
 interface CredentialsProps {
+  email: string; 
+  password: string; 
+  deviceName: string;
+}
+
+class AuthService {
   
-  email: string, 
-  password: string, 
-  device_name: string
+  static async login(credentials: CredentialsProps) {
+    const { data } = await ASMSApiClient.post(AuthUrlsManager.LOGIN_SUFFIX, credentials);
+    await TokenService.setToken(data.token);
+  }
+
+  static async loadUser() {
+    const { data: user } = await ASMSApiClient.get(AuthUrlsManager.USER_SUFFIX);
+    return user;
+  }
+
+  static async logout() {
+    await ASMSApiClient.post(AuthUrlsManager.LOGOUT_SUFFIX);
+    await TokenService.setToken(null);
+  }
 }
 
-export async function login(credentials: CredentialsProps) {
-  const { data } = await axios.post(AuthUrlsManager.LOGIN_SUFFIX, credentials);
-
-  await setToken(data.token);
-}
-
-export async function loadUser() {
-  const token = await getToken();
-  const { data: user } = await axios.get(AuthUrlsManager.USER_SUFFIX, {
-  });
-
-  return user;
-}
-
-export async function logout() {
-  const token = await getToken();
-  const response = await axios.post(AuthUrlsManager.LOGOUT_SUFFIX, {}, {
-  })
-
-  await setToken(null);
-}
-  
+export default AuthService;

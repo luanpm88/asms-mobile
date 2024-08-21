@@ -5,7 +5,6 @@ import AuthUrlsManager from '@/app/api/AuthUrlsManager';
 import axios from 'axios';
 
 interface AuthState {
-    
     tokenKey: string,
     isLoading: boolean;
     errorMessage: string | null;

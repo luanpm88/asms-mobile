@@ -1,17 +1,17 @@
 import axiosLib from "axios";
 import ApiUrlsManager from "../api/ApiUrlsManager";
-import { getToken } from "../services/TokenService";
+import TokenService from "../services/TokenService";
 
-const axios = axiosLib.create({
+const ASMSApiClient = axiosLib.create({
     baseURL: ApiUrlsManager.getBaseUrl(),
     headers: {
         Accept: "application/json"
     },
 });
 
-axios.interceptors.request.use(
+ASMSApiClient.interceptors.request.use(
     async (config) => {
-        const token = await getToken();
+        const token = await TokenService.getToken();
 
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
@@ -24,4 +24,4 @@ axios.interceptors.request.use(
     }
 );
 
-export default axios;
+export default ASMSApiClient;
