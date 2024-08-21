@@ -10,7 +10,7 @@ import {
   Image,
 } from "react-native";
 import { FontAwesome, FontAwesome6, AntDesign } from "@expo/vector-icons";
-import Colors from "../constants/Colors"; // Assuming Colors is defined in your project
+import Colors from "../../constants/Colors"; // Assuming Colors is defined in your project
 import Slider from "@react-native-community/slider";
 
 const sections = [
@@ -64,7 +64,7 @@ const CourseRecent = () => {
               <View style={[styles.item, { marginVertical: 10 }]}>
                 <View style={styles.iconContainer}>
                   <Image
-                    source={require("../../assets/images/react-logo.png")}
+                    source={require("../../../assets/images/react-logo.png")}
                     style={styles.image}
                   />
                 </View>

@@ -1,4 +1,4 @@
-import ApiUrls from "../entities/api/ApiUrls";
+import AuthUrlsManager from "../api/AuthUrlsManager";
 import axios from "../utils/axios";
 import { getToken, setToken } from "./TokenService";
 
@@ -9,14 +9,14 @@ interface CredentialsProps {
 }
 
 export async function login(credentials: CredentialsProps) {
-  const { data } = await axios.post(ApiUrls.LOGIN_SUFFIX, credentials);
+  const { data } = await axios.post(AuthUrlsManager.LOGIN_SUFFIX, credentials);
 
   await setToken(data.token);
 }
 
 export async function loadUser() {
   const token = await getToken();
-  const { data: user } = await axios.get(ApiUrls.USER_SUFFIX, {
+  const { data: user } = await axios.get(AuthUrlsManager.USER_SUFFIX, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -28,7 +28,7 @@ export async function loadUser() {
 export async function logout() {
   const token = await getToken();
 
-  const response = await axios.post(ApiUrls.LOGOUT_SUFFIX, {}, {
+  const response = await axios.post(AuthUrlsManager.LOGOUT_SUFFIX, {}, {
     headers: {
       Authorization: `Bearer ${token}`
     }

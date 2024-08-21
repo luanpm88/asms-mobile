@@ -96,7 +96,8 @@ const onSend = useCallback((newMessages = []) => {
       setMessages(previousMessages => GiftedChat.append(previousMessages, newMessage));
     })
     .catch(error => 
-      console.log(2));
+      console.log(2)
+    );
       // console.error(error));
 }, [user_id]);
 

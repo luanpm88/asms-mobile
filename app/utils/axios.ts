@@ -1,8 +1,8 @@
 import axiosLib from "axios";
-import ApiUrls from "../entities/api/ApiUrls";
+import ApiUrlsManager from "../api/ApiUrlsManager";
 
 const axios = axiosLib.create({
-    baseURL: ApiUrls.getBaseUrl(),
+    baseURL: ApiUrlsManager.getBaseUrl(),
     headers: {
         Accept: "application/json"
     },

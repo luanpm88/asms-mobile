@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
-import ApiUrls from '@/app/entities/api/ApiUrls';
+import AuthUrlsManager from '@/app/api/AuthUrlsManager';
 import axios from 'axios';
 
 interface AuthState {
@@ -43,13 +43,11 @@ const authSlice = createSlice({
 export const logout = createAsyncThunk('auth/logout', async(_, { dispatch }) => {
     try {
         const token = await AsyncStorage.getItem('authToken');
-        const response = await axios.post(ApiUrls.getLogOutUrl(), {}, {
+        const response = await axios.post(AuthUrlsManager.getLogOutUrl(), {}, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-
-        console.log(response)
 
         if (response.data.status === 200) {
             await AsyncStorage.removeItem('authToken');

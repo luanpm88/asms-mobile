@@ -6,7 +6,7 @@ import AuthContext from "./contexts/AuthContext";
 import { loadUser } from "./services/AuthService";
 import { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
-import Splash from "./(screens)/Splash";
+import Splash from "./(screens)/splash";
 
 export default function RootLayout() {
   const [user, setUser] = useState();
@@ -19,7 +19,7 @@ export default function RootLayout() {
         const user = await loadUser();
         setUser(user);
       } catch (e) {
-        console.log("Fail to load user", e);
+        console.error("Fail to load user", e);
       }
 
       setStatus("idle");
@@ -30,13 +30,13 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (status === "loading") {
-      router.replace("/(screens)/Splash");
+      router.replace("/(screens)/splash");
     }
     
     if (user) {
       router.replace("/(tabs)/home");
     } else {
-      router.replace("/(screens)/login");
+      router.replace("/(screens)/authentication/login");
     }
   }, [user]);
 

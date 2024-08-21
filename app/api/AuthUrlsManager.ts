@@ -1,17 +1,10 @@
-class ApiUrls {
-    // private static readonly BASE_URL = `192.168.2.14/api`;
-    // private static readonly BASE_URL = `http://asms.com/api`;
-    private static readonly BASE_URL = `https://asms-americanstudy.com/api`;
-    // private static readonly BASE_URL = `${process.env.EXPO_PUBLIC_HOST_NAME}/api`;
+import ApiUrlsManager from "./ApiUrlsManager";
 
+class AuthUrlsManager extends ApiUrlsManager {
     public static readonly LOGIN_SUFFIX = "/login";
     public static readonly LOGOUT_SUFFIX = "/logout";
     public static readonly REGISTER_SUFFIX = "/register";
     public static readonly USER_SUFFIX = "/user";
-
-    public static getBaseUrl(): string {
-        return this.BASE_URL;
-    }
 
     public static getLoginUrl(): string {
         return this.BASE_URL + this.LOGIN_SUFFIX;
@@ -30,4 +23,4 @@ class ApiUrls {
     }
 }
 
-export default ApiUrls;
+export default AuthUrlsManager;

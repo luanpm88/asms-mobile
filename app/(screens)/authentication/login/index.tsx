@@ -39,7 +39,7 @@ export default function() {
           alt="App Logo"
           resizeMode="contain"
           style={styles.headerImg}
-          source={require("../../../assets/images/logo.png")}
+          source={require("../../../../assets/images/logo.png")}
         />
         <Text style={styles.title}>
           Đăng nhập vào <Text style={{ color: "#075eec" }}>ASMS</Text>
