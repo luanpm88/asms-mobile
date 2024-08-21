@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import { View, Text, TextInput } from "react-native";
 
 interface FormTextFieldProps {
-  
     label?: string,
     secureTextEntry?: boolean,
     value?: string,

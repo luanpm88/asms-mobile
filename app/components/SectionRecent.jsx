@@ -1,4 +1,7 @@
 import React from "react";
+import { FontAwesome, FontAwesome6, AntDesign } from "@expo/vector-icons";
+import Colors from "../constants/Colors";
+import globalStyles from '../constants/styles'
 import {
   View,
   Text,
@@ -7,9 +10,6 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { FontAwesome, FontAwesome6, AntDesign } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
-import globalStyles from '../constants/styles'
 
 const sections = [
   {

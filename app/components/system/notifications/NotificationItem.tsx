@@ -6,7 +6,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Colors from '@/app/constants/Colors';
 
 interface NotificationItemProps {
-  
   title: string;
   date: string;
   info: string;

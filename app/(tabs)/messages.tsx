@@ -1,19 +1,16 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React from 'react';
+import Colors from '../constants/Colors';
+import { useRouter } from "expo-router";
+import { Feather } from '@expo/vector-icons';
 import {
   StyleSheet,
   SafeAreaView,
   View,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   Image,
 } from 'react-native';
-import Colors from '../constants/Colors';
-import { useRouter } from "expo-router";
-import { Feather, AntDesign, Entypo, Ionicons, FontAwesome5 } from '@expo/vector-icons';
-
-
 
 const users = [
   {
@@ -68,6 +65,7 @@ const users = [
 
 export default function MessageScreen() {
   const router = useRouter();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <View style={styles.container}>
@@ -91,7 +89,6 @@ export default function MessageScreen() {
                        });
                     }}>
                     <View style={styles.card}>
-                     
                        <Image
                         alt=""
                         resizeMode="cover"
@@ -102,7 +99,6 @@ export default function MessageScreen() {
                       <View style={styles.cardBody}>
                         <Text> User: {user_id}</Text>
                         <Text style={styles.cardTitle}>{name}</Text>
-
                         <Text style={styles.cardPhone}>{phone}</Text>
                       </View>
 

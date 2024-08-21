@@ -3,8 +3,6 @@ import { View } from 'react-native';
 import { Tabs } from 'expo-router';
 import Colors from '../constants/Colors';
 import { AntDesign, Entypo, Ionicons, FontAwesome5 } from '@expo/vector-icons';
-import { Provider } from 'react-redux';
-import { store } from '../utils/redux/store/store';
 
 export default function TabsLayout() {
   return (
@@ -29,7 +27,6 @@ export default function TabsLayout() {
             <View style={{
               justifyContent: 'center',
               alignItems: 'center',
-              // backgroundColor: focused ? 'rgba(0,0,0,0.1)' : 'transparent',
               borderRadius: 15,
               padding: 3,
             }}>
@@ -51,7 +48,6 @@ export default function TabsLayout() {
             <View style={{
               justifyContent: 'center',
               alignItems: 'center',
-              // backgroundColor: focused ? 'rgba(0,0,0,0.1)' : 'transparent',
               borderRadius: 15,
               padding: 3,
               
@@ -74,7 +70,6 @@ export default function TabsLayout() {
             <View style={{
               justifyContent: 'center',
               alignItems: 'center',
-              // backgroundColor: focused ? 'rgba(0,0,0,0.1)' : 'transparent',
               borderRadius: 15,
               padding: 3,
             }}>
@@ -96,7 +91,6 @@ export default function TabsLayout() {
             <View style={{
               justifyContent: 'center',
               alignItems: 'center',
-              // backgroundColor: focused ? 'rgba(0,0,0,0.1)' : 'transparent',
               borderRadius: 15,
               padding: 3,
             }}>

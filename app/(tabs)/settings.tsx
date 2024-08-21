@@ -174,8 +174,6 @@ export default function Example() {
               </TouchableOpacity>
             </View>
 
-        
-
             <View style={[styles.rowWrapper, styles.rowLast]}>
               <TouchableOpacity
                 onPress={() => {

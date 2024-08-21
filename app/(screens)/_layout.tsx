@@ -22,7 +22,7 @@ export default function ScreensLayout() {
             <Stack.Screen 
                 name="message/index" 
                 options={{
-                    headerShown: true,
+                    headerShown: false,
                     title: "Tin nhắn"
                 }}
             />

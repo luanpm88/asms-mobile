@@ -1,8 +1,6 @@
 import { createContext } from "react";
-import { User } from "react-native-gifted-chat";
 
 interface AuthContextType {
-  
   user: any;
   setUser: any;
 }

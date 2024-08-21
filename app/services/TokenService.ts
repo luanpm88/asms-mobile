@@ -19,6 +19,7 @@ class TokenService {
         }
 
         this.token = await AsyncStorage.getItem("token");
+        
         return this.token;
     }
 }

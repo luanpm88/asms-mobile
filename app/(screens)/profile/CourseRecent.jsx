@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/FontAwesome'; 
+import { AntDesign } from "@expo/vector-icons";
+import Colors from "../../constants/Colors";
+import Slider from "@react-native-community/slider";
 import {
   View,
   Text,
@@ -9,9 +12,6 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { FontAwesome, FontAwesome6, AntDesign } from "@expo/vector-icons";
-import Colors from "../../constants/Colors"; // Assuming Colors is defined in your project
-import Slider from "@react-native-community/slider";
 
 const sections = [
   {
@@ -42,14 +42,10 @@ const CourseRecent = () => {
   const [value, setValue] = useState(30);
   const [sliderWidth, setSliderWidth] = useState(0);
   const thumbPosition = (value / 100) * (sliderWidth - 40);
+
   return (
     <View style={styles.container}>
-      {/* <View style={styles.header}>
-        <Text style={styles.title}>Lớp học gần đây</Text>
-      </View> */}
       <View style={styles.iconContainer}>
-        
-      
         <Text style={styles.title}><Icon name="book" size={20} color="green" />Lớp đang học</Text>
       </View>
 
@@ -100,6 +96,7 @@ const CourseRecent = () => {
                 />
                 <Text style={styles.itemText}>Bài học trước</Text>
               </View>
+
               <View style={styles.item}>
                 <AntDesign
                   style={{ paddingRight: 20 }}
@@ -109,6 +106,7 @@ const CourseRecent = () => {
                 />
                 <Text style={styles.itemText}>FINAL TEST - TEST DAY</Text>
               </View>
+
               <View style={styles.item}>
                 <AntDesign
                   style={{ paddingRight: 20 }}
@@ -118,8 +116,8 @@ const CourseRecent = () => {
                 />
                 <Text style={styles.itemText}>Nhận xét của giáo viên</Text>
               </View>
+
               <View style={styles.item}>
-                
                 <Text style={styles.itemText}>---</Text>
               </View>
             </View>
