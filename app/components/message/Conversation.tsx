@@ -1,74 +1,97 @@
+// SomeComponent.js
 import React, { useEffect, useCallback, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Avatar } from 'react-native-elements';
 import { GiftedChat, Bubble, InputToolbar, Send } from 'react-native-gifted-chat';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 
+import axios from 'axios';
+
+import { database, ref, push, onValue } from '../../db/firebaseConfig';
+
 const ConversationScreen = () => {
-
-    const router = useRouter();
+  const router = useRouter();
   const { user_id, name, phone, img } = useLocalSearchParams(); 
-  
-  const messagesContent = [
-    {
-      _id: 1,
-      text: 'Sed efficitur varius dignissim.',
-      createdAt: new Date(),
-      user: {
-        _id: 2,
-        name: 'React Native',
-        avatar: img,
-      },
-    },
-    {
-      _id: 2,
-      text: '[x] Lorem ipsum\ndolor sit amet',
-      createdAt: new Date(),
-      user: {
-        _id: 1,
-      },
-    },
-    {
-      _id: 3,
-      text: 'Vivamus cursus nisi sit amet risus cursus fringilla.',
-      createdAt: new Date(),
-      user: {
-        _id: 2,
-        name: 'React Native',
-        avatar: img,
-      },
-    },  
-    {
-      _id: 4,
-      text: '[x] Lorem ipsum',
-      createdAt: new Date(),
-      user: {
-        _id: 1,
-      },
-    },
-    {
-      _id: 5,
-      text: 'Aliquam erat volutpat.',
-      createdAt: new Date(),
-      user: {
-        _id: 1,
-      },
-    },  
-  ];
 
-  
+  const [messages, setMessages] = useState([]);
 
-  const [messages, setMessages] = useState(messagesContent);
+  // useEffect(() => {
+  //   const messagesRef = ref(database, `conversations/${user_id}`);
 
-  useEffect(() => {
-    setMessages(messagesContent);
-  }, []);
+  //   const unsubscribe = onValue(messagesRef, (snapshot) => {
+  //     const data = snapshot.val();
+  //     const loadedMessages = data ? Object.keys(data).map(key => ({
+  //       _id: key,
+  //       text: data[key].text,
+  //       createdAt: new Date(data[key].createdAt),
+  //       user: data[key].user,
+  //     })) : [];
+  //     setMessages(loadedMessages.reverse());
+  //   });
 
-  const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
-  }, []);
+  //   return () => unsubscribe();
+  // }, [user_id]);
+
+  // const onSend = useCallback((newMessages = []) => {
+  //   const messagesRef = ref(database, `conversations/${user_id}`);
+  //   const newMessage = newMessages[0];
+  //   const messageData = {
+  //     text: newMessage.text,
+  //     createdAt: new Date().toISOString(),
+  //     user: newMessage.user,
+  //   };
+  //   push(messagesRef, messageData).then(() => {
+  //     const systemReply = {
+  //       text: 'Reply',
+  //       createdAt: new Date().toISOString(),
+  //       user: {
+  //         _id: user_id, 
+  //         name: name,
+  //         avatar: img
+  //       },
+  //     };
+  //     push(messagesRef, systemReply);
+  //   });
+  // }, [user_id]);
+
+useEffect(() => {
+  axios.get(`http://asms.com/api/messages/${user_id}`)
+    .then(response => {
+      const loadedMessages = response.data.map(message => ({
+        _id: message.id,
+        text: message.content,
+        createdAt: new Date(message.created_at),
+        user: {
+          _id: message.sender_id,
+          name: message.sender_id === user_id ? name : 'Other User',
+          avatar: img,
+        },
+      }));
+      setMessages(loadedMessages.reverse());
+    })
+    .catch(error => console.error(error));
+}, [user_id]);
+
+
+const onSend = useCallback((newMessages = []) => {
+  const newMessage = newMessages[0];
+  const messageData = {
+    sender_id: 99, 
+    receiver_id: user_id,
+    content: newMessage.text,
+  };
+  console.log(messageData)
+
+  axios.post('http://asms.com/api/messages', messageData)
+    .then(response => {
+      console.log(1);
+      setMessages(previousMessages => GiftedChat.append(previousMessages, newMessage));
+    })
+    .catch(error => 
+      console.log(2));
+      // console.error(error));
+}, [user_id]);
 
   return (
     <View style={styles.container}>
@@ -79,12 +102,8 @@ const ConversationScreen = () => {
           </TouchableOpacity>
           <Text style={styles.headerTitle}>{name}</Text>
         </View>
-        
         <View style={[styles.headerRight, { alignItems: 'flex-end' }]}>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}>
+          <TouchableOpacity >
             <Feather color="#000" name="more-vertical" size={24} />
           </TouchableOpacity>
         </View>
@@ -95,28 +114,21 @@ const ConversationScreen = () => {
           showAvatarForEveryMessage={true}
           onSend={messages => onSend(messages)}
           user={{
-            _id: 1, // Dummy user ID
-            name: name || '',
-            avatar: img ,
+            _id: 0, 
+            name: '',
+            avatar: '',
           }}
+          
           renderBubble={(props) => (
             <Bubble
               {...props}
               wrapperStyle={{
-                left: {
-                  backgroundColor: '#f0f0f0',
-                },
-                right: {
-                  backgroundColor: '#007aff',
-                },
+                left: { backgroundColor: '#f0f0f0' },
+                right: { backgroundColor: '#007aff' },
               }}
               textStyle={{
-                left: {
-                  color: '#000',
-                },
-                right: {
-                  color: '#fff',
-                },
+                left: { color: '#000' },
+                right: { color: '#fff' },
               }}
             />
           )}
@@ -127,10 +139,7 @@ const ConversationScreen = () => {
             />
           )}
           renderSend={(props) => (
-            <Send
-              {...props}
-              containerStyle={styles.sendButton}
-            >
+            <Send {...props} containerStyle={styles.sendButton}>
               <Feather name="send" size={24} color="#fff" />
             </Send>
           )}
@@ -194,6 +203,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
 
 export default ConversationScreen;

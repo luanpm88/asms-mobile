@@ -8,7 +8,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useIsFocused } from '@react-navigation/native';
 export default function RootLayout() {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  // const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const isFocused = useIsFocused();
   useEffect(() => {
     const checkLogin = async () => {

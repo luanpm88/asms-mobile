@@ -9,11 +9,11 @@ import { populateTestNotifications } from '@/app/reducer/features/notifications/
 import { useRouter } from 'expo-router';
 
 interface TopbarProps {
-  notificationCount?: string;
+  notificationCount: string;
   name: string;
 }
 
-const Topbar: React.FC<TopbarProps> = ({ notificationCount = "9+", name }) => {
+const Topbar = ({ notificationCount = "9+", name }: TopbarProps) => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 

@@ -27,7 +27,8 @@ export default function Login() {
 
   const handleLogin = async (values: any) => {
     try {
-      const response = await fetch(ApiUrls.getLoginUrl(), {
+      // const response = await fetch(ApiUrls.getLoginUrl(), {
+        const response = await fetch(`http:/asms.com/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,6 +89,7 @@ export default function Login() {
         touched,
       }) => (
         <View style={styles.container}>
+        <View style={styles.topHalf}>
           <View style={styles.header}>
             <Image
               alt="App Logo"
@@ -95,16 +97,13 @@ export default function Login() {
               style={styles.headerImg}
               source={require("../assets/images/logo.png")}
             />
-
             <Text style={styles.title}>
               Đăng nhập vào <Text style={{ color: "#075eec" }}>ASMS</Text>
             </Text>
           </View>
-
           <View style={styles.form}>
             <View style={styles.input}>
               <Text style={styles.inputLabel}>E-mail</Text>
-
               <TextInput
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -115,7 +114,7 @@ export default function Login() {
                 placeholder="john@example.com"
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
-                value={values.email }
+                value={values.email}
               />
               {touched.email && errors.email && (
                 <Text style={styles.errorText}>{errors.email}</Text>
@@ -133,26 +132,26 @@ export default function Login() {
                 placeholderTextColor="#6b7280"
                 style={styles.inputControl}
                 secureTextEntry={true}
-                value={values.password }
+                value={values.password}
               />
               {touched.password && errors.password && (
                 <Text style={styles.errorText}>{errors.password}</Text>
               )}
             </View>
 
-            <View style={styles.formAction}>
-              <TouchableOpacity onPress={() => handleSubmit()} style={styles.btn}>
-                <Text style={styles.btnText}>Đăng nhập</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity onPress={() => handleSubmit()} style={styles.btn}>
+              <Text style={styles.btnText}>Đăng nhập</Text>
+            </TouchableOpacity>
             <Text style={styles.formLink}>Quên mật khẩu?</Text>
           </View>
+        </View>
 
+        <View style={styles.bottomHalf}>
           <TouchableOpacity
             onPress={() => {
               // handle link
             }}
-            style={{ marginTop: "auto" }}
+            style={styles.signUpLink}
           >
             <Text style={styles.formFooter}>
               Bạn chưa có tài khoản?{" "}
@@ -160,6 +159,7 @@ export default function Login() {
             </Text>
           </TouchableOpacity>
         </View>
+      </View>
       )}
     </Formik>
   );
@@ -167,11 +167,19 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 24,
-    paddingHorizontal: 0,
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
+    flex: 1,
+  },
+  topHalf: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  bottomHalf: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingBottom: 24,
   },
   title: {
     fontSize: 31,
@@ -179,15 +187,9 @@ const styles = StyleSheet.create({
     color: "#1D2A32",
     marginBottom: 6,
   },
-  subtitle: {
-    fontSize: 15,
-    fontWeight: "500",
-    color: "#929292",
-  },
   header: {
     alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 36,
+    marginBottom: 36,
   },
   headerImg: {
     width: 80,
@@ -197,27 +199,6 @@ const styles = StyleSheet.create({
   },
   form: {
     marginBottom: 24,
-    paddingHorizontal: 24,
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
-  },
-  formAction: {
-    marginTop: 4,
-    marginBottom: 16,
-  },
-  formLink: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#075eec",
-    textAlign: "center",
-  },
-  formFooter: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: "#222",
-    textAlign: "center",
-    letterSpacing: 0.15,
   },
   input: {
     marginBottom: 16,
@@ -255,11 +236,28 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: "#075eec",
     borderColor: "#075eec",
+    marginBottom: 16,
   },
   btnText: {
     fontSize: 18,
     lineHeight: 26,
     fontWeight: "600",
     color: "#fff",
+  },
+  formLink: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#075eec",
+    textAlign: "center",
+  },
+  formFooter: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#222",
+    textAlign: "center",
+    letterSpacing: 0.15,
+  },
+  signUpLink: {
+    marginTop: "auto",
   },
 });
