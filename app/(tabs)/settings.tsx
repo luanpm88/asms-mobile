@@ -1,62 +1,39 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Switch,
-  Image,
+    StyleSheet,
+    SafeAreaView,
+    ScrollView,
+    View,
+    Text,
+    TouchableOpacity,
+    Switch,
+    Image,
 } from 'react-native';
-import { Feather, AntDesign, Entypo, Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { useRouter } from 'expo-router';
+import { logout } from '../services/AuthService';
+import AuthContext from '../contexts/AuthContext';
 
 export default function Example() {
-  const router = useRouter();
+    const router = useRouter();
+    const { user, setUser } = useContext(AuthContext);
+    const [form, setForm] = useState({
+        emailNotifications: true,
+        pushNotifications: false,
+    });
 
-  const [form, setForm] = useState({
-    emailNotifications: true,
-    pushNotifications: false,
-  });
-
-  const signOut = () => {
-    router.replace("/login");
-}
+    async function signOut() {
+      await logout();
+      if (setUser) {
+          setUser(null);
+      } else {
+          console.error("setUser is null");
+      }
+  }
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#f8f8f8' }}>
-      {/* <View style={styles.header}>
-        <View style={styles.headerAction}>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}>
-            <Feather
-              color="#000"
-              name="arrow-left"
-              size={24} />
-          </TouchableOpacity>
-        </View>
-
-        <Text numberOfLines={1} style={styles.headerTitle}>
-          Settings
-        </Text>
-
-        <View style={[styles.headerAction, { alignItems: 'flex-end' }]}>
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}>
-            <Feather
-              color="#000"
-              name="more-vertical"
-              size={24} />
-          </TouchableOpacity>
-        </View>
-      </View> */}
-
       <ScrollView contentContainerStyle={styles.content}>
         <View style={[styles.section, { paddingTop: 4 }]}>
           <Text style={styles.sectionTitle}>Account</Text>
@@ -64,7 +41,6 @@ export default function Example() {
           <View style={styles.sectionBody}>
             <TouchableOpacity
               onPress={() => {
-                // handle onPress
               }}
               style={styles.profile}>
               <Image

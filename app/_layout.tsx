@@ -1,55 +1,58 @@
-import { Provider } from "react-redux";
-import { store } from './store/store'
 import { Stack } from "expo-router";
-import { useEffect, useState } from "react";
-import { useRouter } from "expo-router";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Provider } from "react-redux";
+import { store } from "./utils/redux/store/store";
+import AuthContext from "./contexts/AuthContext";
+import { loadUser } from "./services/AuthService";
+import { useState, useEffect } from "react";
+import { useRouter } from "expo-router";
+import Splash from "./(screens)/Splash";
 
-import { useIsFocused } from '@react-navigation/native';
 export default function RootLayout() {
+  const [user, setUser] = useState();
+  const [status, setStatus] = useState("loading");
   const router = useRouter();
-  // const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
-  const isFocused = useIsFocused();
-  useEffect(() => {
-    const checkLogin = async () => {
-      setIsLoggedIn(false);
-      // const token = await AsyncStorage.getItem('userToken');
-      // if (token) {
-      //   setIsLoggedIn(true);
-      // } else {
-      //   setIsLoggedIn(false);
-      // }
-    };
 
-    checkLogin();
+  useEffect(() => {
+    async function runEffect() {
+      try {
+        const user = await loadUser();
+        setUser(user);
+      } catch (e) {
+        console.log("Fail to load user", e);
+      }
+
+      setStatus("idle");
+    }
+
+    runEffect();
   }, []);
 
   useEffect(() => {
-    if (isFocused) {
-      if (isLoggedIn === false) {
-        router.replace('/login');
-      } else if (isLoggedIn === true) {
-        router.replace('./(tabs)/home'); // Đổi thành đường dẫn chính sau khi đăng nhập
-      }
+    if (status === "loading") {
+      router.replace("/(screens)/Splash");
     }
-  }, [isFocused, isLoggedIn]);
-
-  if (isLoggedIn === null) {
-    return null; // Hoặc một màn hình loading
-  }
+    
+    if (user) {
+      router.replace("/(tabs)/home");
+    } else {
+      router.replace("/(screens)/login");
+    }
+  }, [user]);
 
   return (
     <Provider store={store}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack screenOptions={{ headerShown: false }}>
-          {isLoggedIn ? (
+      <AuthContext.Provider value={{ user, setUser }}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Stack screenOptions={{ headerShown: false }}>
+          {user ? (
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          ) : (
-            <Stack.Screen name="login" options={{ headerShown: false }} />
+          ): (
+            <Stack.Screen name="(screens)" options={{ headerShown: false }} />            
           )}
-        </Stack>
-      </GestureHandlerRootView>
+          </Stack>
+        </GestureHandlerRootView>
+      </AuthContext.Provider>
     </Provider>
   );
 }

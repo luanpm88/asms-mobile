@@ -1,7 +1,7 @@
 import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import NotificationItem from './NotificationItem';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store/store';
+import { RootState } from '@/app/utils/redux/store/store';
 
 export default function NotificationList() {
     const notifications = useSelector((state: RootState) => state.notifications.notifications);

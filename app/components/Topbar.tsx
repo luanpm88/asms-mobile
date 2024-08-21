@@ -4,8 +4,8 @@ import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import globalStyles from '../constants/styles';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/store';
-import { populateTestNotifications } from '@/app/reducer/features/notifications/notificationsSlice';
+import { AppDispatch } from '../utils/redux/store/store';
+import { populateTestNotifications } from '@/app/utils/redux/reducer/features/notifications/notificationsSlice';
 import { useRouter } from 'expo-router';
 
 interface TopbarProps {

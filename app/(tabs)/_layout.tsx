@@ -3,6 +3,8 @@ import { View } from 'react-native';
 import { Tabs } from 'expo-router';
 import Colors from '../constants/Colors';
 import { AntDesign, Entypo, Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { Provider } from 'react-redux';
+import { store } from '../utils/redux/store/store';
 
 export default function TabsLayout() {
   return (

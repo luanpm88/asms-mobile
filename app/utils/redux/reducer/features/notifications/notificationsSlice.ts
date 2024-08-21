@@ -1,14 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppDispatch } from '@/app/store/store';
+import { AppDispatch } from '@/app/utils/redux/store/store';
 import NotificationClass from '@/app/entities/Notification';
-
-// interface Notification {
-//     title: string;
-//     date: string;
-//     info: string;
-//     titleIcon?: React.ReactNode;
-//     timeIcon?: React.ReactNode;
-// }
 
 interface NotificationState {
     notifications: NotificationClass[];
