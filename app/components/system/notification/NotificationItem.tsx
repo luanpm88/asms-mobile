@@ -32,7 +32,6 @@ const NotificationItem: React.FC<NotificationProps> = ({ notification, onDelete 
     return (
         <View style={styles.container}>
             <View style={styles.titleBox}>
-                {/* Assuming you have icons setup for these */}
                 <Text style={styles.title}>{notification.type}</Text>
                 <Pressable onPress={showModal} style={styles.settingButton} ref={settingButtonRef}>
                     <Entypo name="cog" size={14} color="#888" />
