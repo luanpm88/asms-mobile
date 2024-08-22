@@ -18,7 +18,7 @@ const NotificationItem: React.FC<NotificationProps> = ({ notification, onDelete 
     const hideModal = () => setModalVisible(false);
     const showModal = () => {
         if (settingButtonRef.current) {
-            settingButtonRef.current.measure((x, y, width, height, pageX, pageY) => {
+            settingButtonRef.current.measure((height, pageX, pageY) => {
                 setModalPosition({
                     top: pageY + height - 100,
                     left: pageX - 100,
@@ -31,7 +31,7 @@ const NotificationItem: React.FC<NotificationProps> = ({ notification, onDelete 
     return (
         <View style={styles.container}>
             <View style={styles.titleBox}>
-                <Text style={styles.title}>{notification.type}</Text>
+                <Text style={styles.title}>{notification.name}</Text>
                 <Pressable onPress={showModal} style={styles.settingButton} ref={settingButtonRef}>
                     <Entypo name="cog" size={14} color="#888" />
                 </Pressable>
