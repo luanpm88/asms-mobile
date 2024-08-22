@@ -13,6 +13,7 @@ import ApiUrls from "@/app/entities/api/ApiUrls";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/app/utils/redux/reducer/features/auth/authSlice";
 import { useRouter } from "expo-router";
+import Colors from "@/app/constants/Colors";
 
 export default function Login() {
     const [email, setEmail] = useState<string>("");
@@ -101,7 +102,11 @@ export default function Login() {
                     <Text style={styles.btnText}>Đăng nhập</Text>
                 </TouchableOpacity>
                 </View>
-                <Text style={styles.formLink}>Quên mật khẩu?</Text>
+                <TouchableOpacity onPress={() => router.push('/(screens)/forgot-password')}>
+                  <Text style={styles.formLink}>
+                    Quên mật khẩu?
+                  </Text>
+                </TouchableOpacity>
             </View>
 
             <TouchableOpacity
@@ -111,10 +116,14 @@ export default function Login() {
             >
                 <Text style={styles.formFooter}>
                 Bạn chưa có tài khoản?{" "}
-                <Text style={{ textDecorationLine: "underline" }}>Đăng ký</Text>
+                <TouchableOpacity onPress={() => router.push('/(screens)/sign-up')}>
+                  <Text style={{ textDecorationLine: "underline" }}>
+                    Đăng ký
+                  </Text>
+                  </TouchableOpacity>
                 </Text>
             </TouchableOpacity>
-            </View>
+          </View>
     );
 }
 
@@ -125,6 +134,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
+    backgroundColor: Colors.white
   },
   title: {
     fontSize: 31,
