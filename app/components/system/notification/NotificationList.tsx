@@ -7,12 +7,10 @@ import NotificationDTO from '@/app/dto/NotificationDTO';
 
 export default function NotificationList() {
     const [notifications, setNotifications] = useState<NotificationDTO[]>([]);
-
     const getNotifications = async () => {
-        const response = await NotificationService.fetchNotificationsByType(NotificationUrlsManager.TYPE_UNREAD);
-        const notificationsData = response.map((data: any) => new NotificationDTO(data));
+        const notifications = await NotificationService.fetchNotificationsByType(NotificationUrlsManager.TYPE_UNREAD);
 
-        setNotifications(notificationsData);
+        setNotifications(notifications);
     };
 
     useEffect(() => {
