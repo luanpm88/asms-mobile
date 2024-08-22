@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import Colors from "../../constants/Colors"; 
+import Colors from "../../../constants/Colors"; 
 import { TextInput } from 'react-native-gesture-handler'
 import { router } from 'expo-router';
 
@@ -57,7 +57,7 @@ export default function SignUp() {
           <Text style={styles.btnText}>Đăng Ký</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => router.push('/login')}>
+      <TouchableOpacity onPress={() => router.push('/(screens)/authentication/login')}>
         <Text style={styles.formFooter}>Quay lại đăng nhập</Text>
       </TouchableOpacity>
     </View>

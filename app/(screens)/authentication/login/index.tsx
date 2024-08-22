@@ -64,7 +64,7 @@ export default function () {
         <TouchableOpacity style={styles.btn} onPress={handleLogin}>
           <Text style={styles.btnText}>Đăng nhập</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push('/(screens)/forgot-password')}>
+        <TouchableOpacity onPress={() => router.push('/(screens)/authentication/forgot-password')}>
           <Text style={styles.formLink}>
             Quên mật khẩu?
           </Text>
@@ -77,7 +77,7 @@ export default function () {
       >
         <Text style={styles.formFooter}>
           Bạn chưa có tài khoản?{" "}
-          <TouchableOpacity onPress={() => router.push('/(screens)/sign-up')}>
+          <TouchableOpacity onPress={() => router.push('/(screens)/authentication/sign-up')}>
             <Text style={{ textDecorationLine: "underline" }}>
               Đăng ký
             </Text>

@@ -1,16 +1,16 @@
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import React from 'react';
 import { router } from 'expo-router';
-import Colors from "../../constants/Colors"; 
+import Colors from "../../../constants/Colors"; 
 
 export default function ForgotPassword() {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.languageSwitcher}>
-        <Image source={require('../../../assets/images/vietnam_flag.png')} style={styles.flagIcon} />
+        <Image source={require('../../../../assets/images/vietnam_flag.png')} style={styles.flagIcon} />
       </TouchableOpacity>
 
-      <Image source={require('../../../assets/images/question.png')}
+      <Image source={require('../../../../assets/images/question.png')}
         style={styles.image}
       />
       <View style={styles.textContainer}>
@@ -35,7 +35,7 @@ export default function ForgotPassword() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={() => router.push('/login')}>
+      <TouchableOpacity onPress={() => router.push('/(screens)/authentication/login')}>
         <Text style={styles.formFooter}>Quay lại đăng nhập</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   languageSwitcher: {
-    padding: 20,
-    margin: 20,
+    padding: 10,
+    margin: 10,
     position: 'absolute',
     top: 10,
     right: 20,
