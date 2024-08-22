@@ -6,7 +6,6 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { FontAwesome, FontAwesome6, AntDesign } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import Carousel from "react-native-reanimated-carousel";
 import globalStyles from "../constants/styles";

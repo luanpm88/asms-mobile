@@ -1,62 +1,25 @@
-// 
-//
-// import { Header } from 'react-native-elements';
-// 
-
-// import Colors from "../constants/Colors";
-// 
-// const App = () => {
-
-
-//   return (
-//     <View style={styles.container}>
-//         <View style={styles.topbarContainer}>
-//           <Topbar />
-//         </View>
-//       <View style={styles.content}>
-//         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-//           
-//         </ScrollView>
-//       </View>
-//     </View>
-     
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   
-// });
-
-// export default App;
-
-
-import { View, Text, Button,TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from "expo-router";
-import Topbar from '../components/Topbar';
-import Menu from '../components/Menu';
-import SectionRecent from '../components/SectionRecent';
-import CourseRecent from '../profile/CourseRecent';
-import News from '../components/News';
-import { Divider } from 'react-native-paper';
+import Topbar from '../(screens)/profile/Topbar';
+import CourseRecent from '../(screens)/profile/CourseRecent';
 import { Tabs } from '@ant-design/react-native'; 
-
-import Icon from 'react-native-vector-icons/FontAwesome'; // Hoặc thư viện icon bạn sử dụng
+import Icon from 'react-native-vector-icons/FontAwesome';
 import React, { useState } from 'react';
 import Colors from "../constants/Colors";
 
 export default function HomeScreen() {
-    const router = useRouter();
+  const router = useRouter();
   const [showDetails, setShowDetails] = useState(true);
   const [showDetailsParents, setShowDetailsParents] = useState(false);
   const [showAdress, setShowAdress] = useState(false);
-    const goToSettings = () => {
-        router.push('/settings');
-    };
+  const goToSettings = () => {
+      router.push('/settings');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topbarContainer}>
         <Topbar />
-        
       </View>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
@@ -331,15 +294,7 @@ export default function HomeScreen() {
   );
 }
 
-
-
-
 const styles = StyleSheet.create({
-
-  container: {
-        flex: 1,
-        backgroundColor: '#8B0000', // Màu nền đỏ đậm
-      },
       header: {
         backgroundColor: '#8B0000', // Màu nền đỏ đậm
         borderBottomWidth: 0,
@@ -360,9 +315,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white', // Màu trắng
         flex: 1,
         paddingHorizontal: 10, // Đảm bảo khoảng cách từ viền trái và phải
-      },
-      scrollViewContent: {
-        flexGrow: 1, // Đảm bảo nội dung của ScrollView có thể cuộn
       },
       tabContent: {
         flex: 1,
@@ -405,14 +357,6 @@ const styles = StyleSheet.create({
       textContainer: {
         flex: 1,
         flexDirection: 'column', // Đặt text theo chiều dọc
-      },
-      topbarContainer: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10,
-        backgroundColor: Colors.white
       },
   container: {
     flex: 1,

@@ -11,12 +11,19 @@ export default function ScreensLayout() {
                 }}
             />
             <Stack.Screen 
-                name="login/index" 
+                name="authentication/login/index" 
                 options={{
                     headerShown: false,
                     title: "Đăng nhập",
                     headerStyle: {
                     }
+                }}
+            />
+            <Stack.Screen 
+                name="message/index" 
+                options={{
+                    headerShown: false,
+                    title: "Tin nhắn"
                 }}
             />
         </Stack>

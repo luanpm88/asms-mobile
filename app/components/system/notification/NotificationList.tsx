@@ -1,10 +1,23 @@
 import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import NotificationItem from './NotificationItem';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/utils/redux/store/store';
+import NotificationService from '@/app/services/NotificationService';
+import NotificationUrlsManager from '@/app/api/NotificationUrlsManager';
+import { useEffect, useState } from 'react';
+import NotificationDTO from '@/app/dto/NotificationDTO';
 
 export default function NotificationList() {
-    const notifications = useSelector((state: RootState) => state.notifications.notifications);
+    const [notifications, setNotifications] = useState<NotificationDTO[]>([]);
+
+    const getNotifications = async () => {
+        const response = await NotificationService.fetchNotificationsByType(NotificationUrlsManager.TYPE_UNREAD);
+        const notificationsData = response.map((data: any) => new NotificationDTO(data));
+
+        setNotifications(notificationsData);
+    };
+
+    useEffect(() => {
+        getNotifications();
+    }, []);
 
     return (
         <SafeAreaView>
@@ -19,7 +32,7 @@ export default function NotificationList() {
                 }
             </ScrollView>
         </SafeAreaView>
-    );  
+    );
 }
 
 const styles = StyleSheet.create({
@@ -30,8 +43,4 @@ const styles = StyleSheet.create({
     scrollViewContent: {
         padding: 16,
     },
-    text: {
-        fontSize: 18,
-        marginBottom: 16,
-    },
-})
+});

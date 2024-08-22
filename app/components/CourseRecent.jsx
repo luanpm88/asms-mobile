@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { FontAwesome, FontAwesome6, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import Colors from "../constants/Colors"; 
+import globalStyles from '../constants/styles'
+import ProgressBar from 'react-native-progress/Bar';
 import {
   View,
   Text,
@@ -8,10 +12,6 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { FontAwesome, FontAwesome6, AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
-import Colors from "../constants/Colors"; 
-import Slider from "@react-native-community/slider";
-import globalStyles from '../constants/styles'
 
 const sections = [
   {
@@ -36,13 +36,11 @@ const sections = [
     color: Colors.purple,
   },
 ];
-
+const attendedClasses = 10;
+const totalClasses = 30;
+const progress = attendedClasses / totalClasses;
 const { width } = Dimensions.get("window");
 const CourseRecent = () => {
-  const [value, setValue] = useState(30);
-  const [sliderWidth, setSliderWidth] = useState(0);
-  const thumbPosition = (value / 100) * (sliderWidth - 40 * 2);
-  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -71,22 +69,20 @@ const CourseRecent = () => {
               </View>
 
               <View style={styles.sliderContainer}>
-                <View style={[styles.badgeContainer, { left: thumbPosition }]}>
-                  <Text style={styles.badgeText}>Đã học {Math.round(value)} buổi</Text>
-                </View>
-                <Slider
-                  style={styles.slider}
-                  minimumValue={0}
-                  maximumValue={100}
-                  thumbTintColor = {Colors.secondaryColor}
-                  minimumTrackTintColor={Colors.primaryColor}
-                  maximumTrackTintColor={Colors.divider}
-                  value={value}
-                  onValueChange={(val) => setValue(val)}
-                  onLayout={(event) => setSliderWidth(event.nativeEvent.layout.width)}
-                />
+                <Text style={styles.subtitle}>
+                Attended {attendedClasses} out of {totalClasses} classes
+              </Text>
+              <ProgressBar
+                progress={progress}
+                width={ width - 60 * 2}
+                height={10}
+                color="#4caf50"
+                backgroundColor="gray"
+                borderWidth={0}
+                style={styles.progressBar}
+              />
               </View>
-
+              
               <View style={styles.item}>
                 <MaterialCommunityIcons 
                 style={{ paddingRight: 20 }}
@@ -102,6 +98,16 @@ const CourseRecent = () => {
                 />
                 <Text style={styles.itemText}>FINAL TEST - TEST DAY</Text>
               </View>
+              <View style={styles.item}>
+                <AntDesign
+                  style={{ paddingRight: 20 }}
+                  name="question"
+                  size={24}
+                  color={Colors.colorText}
+                />
+                <Text style={styles.itemText}>Something</Text>
+              </View>
+              
               <View style={styles.item}> 
                 <FontAwesome 
                   style={{ paddingRight: 20 }} 
@@ -161,9 +167,9 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   sliderContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
-    marginTop: 35,
+    marginVertical: 10,
   },
   item: {
     flexDirection: "row",
@@ -213,6 +219,10 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     // paddingHorizontal: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 5,
   },
 });
 

@@ -1,15 +1,14 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet,   TouchableOpacity, } from 'react-native';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
+import Colors from "../../constants/Colors.ts"
 
 const Topbar = ({ notificationCount = '9+' }) => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
         <Image
-          source={require('../../assets/images/avatar.jpg')} 
+          source={require('../../../assets/images/avatar.jpg')} 
           style={styles.avatar}
         />
       </View>

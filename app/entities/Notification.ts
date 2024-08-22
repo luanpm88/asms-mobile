@@ -1,4 +1,5 @@
 class Notification {
+    
     title: string;
     date: string;
     info: string;
