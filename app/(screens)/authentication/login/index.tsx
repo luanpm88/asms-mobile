@@ -5,7 +5,7 @@ import AuthServiceImpl from "@/app/services/impl/AuthServiceImpl";
 import { useRouter } from "expo-router";
 import AuthContext from "@/app/contexts/AuthContext";
 
-export default function() {
+export default function () {
   interface ErrorsProps {
     email?: [],
     password?: [],
@@ -49,24 +49,43 @@ export default function() {
         </Text>
       </View>
       <View style={styles.container}>
-        <FormTextField 
-          label="Email:" 
-          value={email} 
-          onChangeText={(text: string) => setEmail(text)} 
+        <FormTextField
+          label="Email:"
+          value={email}
+          onChangeText={(text: string) => setEmail(text)}
           keyboardType="email-address"
           errors={errors.email}
         />
-        <FormTextField 
-          label="Password:" 
-          secureTextEntry={true} 
-          value={password} 
-          onChangeText={(text: string) => setPassword(text)} 
+        <FormTextField
+          label="Password:"
+          secureTextEntry={true}
+          value={password}
+          onChangeText={(text: string) => setPassword(text)}
           errors={errors.password}
         />
         <TouchableOpacity style={styles.btn} onPress={handleLogin}>
           <Text style={styles.btnText}>Đăng nhập</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/(screens)/authentication/forgot-password')}>
+          <Text style={styles.formLink}>
+            Quên mật khẩu?
+          </Text>
+        </TouchableOpacity>
       </View>
+
+      <TouchableOpacity
+        onPress={() => {}}
+        style={{ marginTop: "auto" }}
+      >
+        <Text style={styles.formFooter}>
+          Bạn chưa có tài khoản?{" "}
+          <TouchableOpacity onPress={() => router.push('/(screens)/authentication/sign-up')}>
+            <Text style={{ textDecorationLine: "underline" }}>
+              Đăng ký
+            </Text>
+          </TouchableOpacity>
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -78,8 +97,8 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingTop: 50,
-    paddingLeft: 20, 
-    paddingRight: 20, 
+    paddingLeft: 20,
+    paddingRight: 20,
     rowGap: 16,
   },
   title: {
