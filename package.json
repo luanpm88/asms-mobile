@@ -53,6 +53,7 @@
     "expo-web-browser": "~13.0.3",
     "firebase": "^10.13.0",
     "formik": "^2.4.6",
+    "html-to-text": "^9.0.5",
     "install": "^0.13.0",
     "laravel-echo": "^1.16.1",
     "lottie-react-native": "6.7.0",
@@ -82,6 +83,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
+    "@types/html-to-text": "^9.0.4",
     "@types/jest": "^29.5.12",
     "@types/react": "~18.2.79",
     "@types/react-native-vector-icons": "^6.4.18",

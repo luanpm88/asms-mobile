@@ -15,6 +15,7 @@ const NotificationItem: React.FC<NotificationProps> = ({ notification, onDelete 
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
     const settingButtonRef = useRef<View>(null);
 
+    const hideModal = () => setModalVisible(false);
     const showModal = () => {
         if (settingButtonRef.current) {
             settingButtonRef.current.measure((x, y, width, height, pageX, pageY) => {
@@ -26,8 +27,6 @@ const NotificationItem: React.FC<NotificationProps> = ({ notification, onDelete 
         }
         setModalVisible(true);
     };
-
-    const hideModal = () => setModalVisible(false);
 
     return (
         <View style={styles.container}>

@@ -3,7 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider } from "react-redux";
 import { store } from "./utils/redux/store/store";
 import AuthContext from "./contexts/AuthContext";
-import AuthService from "./services/AuthService";
+import AuthServiceImpl from "./services/impl/AuthServiceImpl";
 import { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
 
@@ -15,7 +15,8 @@ export default function RootLayout() {
   useEffect(() => {
     async function runEffect() {
       try {
-        const user = await AuthService.loadUser();
+        const authService = new AuthServiceImpl();
+        const user = await authService.loadUser();
         setUser(user);
       } catch (e) {
         console.error("Fail to load user", e);

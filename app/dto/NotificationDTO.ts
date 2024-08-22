@@ -1,3 +1,4 @@
+import { htmlToText } from 'html-to-text';
 export default class NotificationDTO {
     id: string;
     type: string;
@@ -14,10 +15,16 @@ export default class NotificationDTO {
         this.type = data.type;
         this.notifiableType = data.notifiable_type;
         this.notifiableId = data.notifiable_id;
-        this.message = data.data.message;
+        this.message = this.cleanMessage(data.data.message);
         this.readAt = data.read_at;
         this.createdAt = data.created_at;
         this.updatedAt = data.updated_at;
         this.pushed = data.pushed;
+    }
+
+    private cleanMessage(html: string): string {
+        return htmlToText(html, {
+            wordwrap: 130
+        });
     }
 }

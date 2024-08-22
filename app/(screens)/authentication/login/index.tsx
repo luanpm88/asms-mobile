@@ -1,7 +1,7 @@
 import { View, SafeAreaView, StyleSheet, Button, Platform, Image, Text, TouchableOpacity } from "react-native";
 import { useState, useContext } from "react";
 import FormTextField from "@/app/components/FormTextField";
-import AuthService from "@/app/services/AuthService";
+import AuthServiceImpl from "@/app/services/impl/AuthServiceImpl";
 import { useRouter } from "expo-router";
 import AuthContext from "@/app/contexts/AuthContext";
 
@@ -19,11 +19,13 @@ export default function() {
 
   async function handleLogin() {
     try {
-      await AuthService.login({
+      const authService = new AuthServiceImpl();
+
+      await authService.login({
         email, password, deviceName: `${Platform.OS} ${Platform.Version}`
       })
 
-      const user = await AuthService.loadUser();
+      const user = await authService.loadUser();
       
       setUser(user);
     } catch (e: any) {

@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import NotificationItem from './NotificationItem';
-import NotificationService from '@/app/services/NotificationService';
+import NotificationServiceImpl from '@/app/services/impl/NotificationServiceImpl';
 import NotificationUrlsManager from '@/app/api/NotificationUrlsManager';
 import { useEffect, useState } from 'react';
 import NotificationDTO from '@/app/dto/NotificationDTO';
@@ -8,7 +8,9 @@ import NotificationDTO from '@/app/dto/NotificationDTO';
 export default function NotificationList() {
     const [notifications, setNotifications] = useState<NotificationDTO[]>([]);
     const getNotifications = async () => {
-        const notifications = await NotificationService.fetchNotificationsByType(NotificationUrlsManager.TYPE_UNREAD);
+        const notificationService = new NotificationServiceImpl();
+        const notifications = await notificationService
+                                    .fetchNotificationsByType(NotificationUrlsManager.TYPE_UNREAD);
 
         setNotifications(notifications);
     };

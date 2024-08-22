@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { useRouter } from 'expo-router';
-import AuthService from '../services/AuthService';
+import AuthServiceImpl from '../services/impl/AuthServiceImpl';
 import AuthContext from '../contexts/AuthContext';
 import {
   StyleSheet,
@@ -24,7 +24,10 @@ export default function Example() {
     });
 
     async function signOut() {
-      await AuthService.logout();
+      const authService = new AuthServiceImpl();
+      
+      await authService.logout();
+      
       if (setUser) {
           setUser(null);
       } else {

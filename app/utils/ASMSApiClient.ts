@@ -1,6 +1,6 @@
 import axiosLib from "axios";
 import ApiUrlsManager from "../api/ApiUrlsManager";
-import TokenService from "../services/TokenService";
+import TokenServiceImpl from "../services/impl/TokenServiceImpl";
 
 const ASMSApiClient = axiosLib.create({
     baseURL: ApiUrlsManager.getBaseUrl(),
@@ -11,7 +11,8 @@ const ASMSApiClient = axiosLib.create({
 
 ASMSApiClient.interceptors.request.use(
     async (config) => {
-        const token = await TokenService.getToken();
+        const tokenService = new TokenServiceImpl();
+        const token = await tokenService.getToken();
 
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
