@@ -1,4 +1,4 @@
-import { View, SafeAreaView, StyleSheet, Button, Platform, Image, Text, TouchableOpacity } from "react-native";
+import { View, SafeAreaView, StyleSheet, Platform, Image, Text, TouchableOpacity } from "react-native";
 import { useState, useContext } from "react";
 import FormTextField from "@/app/components/FormTextField";
 import AuthServiceImpl from "@/app/services/impl/AuthServiceImpl";
