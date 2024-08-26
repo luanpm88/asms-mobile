@@ -13,6 +13,7 @@ export default function NotificationList() {
                                     .fetchNotificationsByType(NotificationUrlsManager.TYPE_UNREAD);
 
         setNotifications(notifications);
+        // console.log(notifications);
     };
 
     useEffect(() => {

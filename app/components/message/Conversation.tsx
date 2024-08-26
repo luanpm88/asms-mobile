@@ -11,64 +11,88 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 
-import axios from "axios";
-import TokenService from "../../services/TokenService";
+
+import MessageServiceImpl from '@/app/services/impl/MessageServiceImpl';
+import AuthServiceImpl from '@/app/services/impl/AuthServiceImpl';
+import MessageDTO from '@/app/dto/MessageDTO';
+
 
 const ConversationScreen = () => {
   const router = useRouter();
   const { user_id, name, phone, img } = useLocalSearchParams();
 
   const [messages, setMessages] = useState([]);
+  const [messagedUsers, setMessagedUsers] = useState<MessageDTO[]>([]);
 
-  const axiosInstance = axios.create({
-    baseURL: "http://asms.com/api",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${TokenService.getToken()}`,
-    },
-  });
+  const [currentUserId, setCurrentUserId] = useState<number>(0);
+
+  
   useEffect(() => {
-    axiosInstance
-      .get(`http://asms.com/api/messages/${user_id}`)
-      .then((response) => {
-        const loadedMessages = response.data.map((message) => ({
-          _id: message.id,
-          text: message.content,
-          createdAt: new Date(message.created_at),
-          user: {
-            _id: message.sender_id,
-            name: message.sender_id === user_id ? name : "Other User",
-            avatar: img,
-          },
-        }));
-        setMessages(loadedMessages.reverse());
-      })
-      .catch((error) => console.error(error));
-  }, [user_id]);
+    const fetchCurrentUser = async () => {
+      try {
+        const authService = new AuthServiceImpl();
+        const user = await authService.loadUser();
+        setCurrentUserId(user.id);
+        // console.log('Ok :', user);
+      } catch (error) {
+        console.error('Failed :', error);
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
+
+  const getMessagedUsers = async () => {
+      try {
+          const messageService = new MessageServiceImpl();
+          const users = await messageService.fetchMessages(user_id);
+          setMessagedUsers(users);
+          const loadedMessages = users.map((message) => ({
+              _id: message.id,
+              text: message.content,
+              createdAt: message.created_at,
+              user: {
+                  _id: message.sender_id,
+                  name: message.sender_id === currentUserId ? name : "Other User",
+                  avatar: img,
+              },
+          }));
+          setMessages(loadedMessages); 
+      } catch (error) {
+          console.error('Failed fetch:', error);
+      }
+  };
+
+  useEffect(() => {
+      getMessagedUsers();
+    // const fetchMessagesInterval = setInterval(() => {
+    //   getMessagedUsers();
+    // }, 3000); 
+   
+    // return () => clearInterval(fetchMessagesInterval);
+}, [user_id, currentUserId]); 
 
   const onSend = useCallback(
     (newMessages = []) => {
-      const newMessage = newMessages[0];
-      const messageData = {
-        sender_id: 99,
-        receiver_id: user_id,
-        content: newMessage.text,
+        const newMessage = newMessages[0];
+        const messageData = {
+          sender_id: currentUserId, 
+          receiver_id: user_id,    
+          content: newMessage.text,
       };
-      console.log(messageData);
-
-      axios
-        .post("http://asms.com/api/messages", messageData)
-        .then((response) => {
-          console.log(1);
-          setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, newMessage)
-          );
-        })
-        .catch((error) => console.log(2));
-      // console.error(error));
+        const messageService = new MessageServiceImpl();
+        messageService.sendMessage(messageData)
+            .then(() => {
+                setMessages((previousMessages) =>
+                    GiftedChat.append(previousMessages, newMessage)
+                );
+            })
+            .catch((error) => {
+                console.error('Error sending message:', error);
+            });
     },
-    [user_id]
-  );
+    [user_id, currentUserId]
+);
 
   return (
     <View style={styles.container}>
@@ -77,7 +101,7 @@ const ConversationScreen = () => {
           <TouchableOpacity onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color={Colors.black} />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>{name}</Text>
+          <Text style={styles.headerTitle}>{name} {user_id}</Text>
         </View>
         <View style={[styles.headerRight, { alignItems: "flex-end" }]}>
           <TouchableOpacity>
@@ -91,7 +115,7 @@ const ConversationScreen = () => {
           showAvatarForEveryMessage={true}
           onSend={(messages) => onSend(messages)}
           user={{
-            _id: 99,
+            _id: currentUserId,
             name: "",
             avatar: "",
           }}

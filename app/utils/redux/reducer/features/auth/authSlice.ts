@@ -4,13 +4,21 @@ import { Alert } from 'react-native';
 import AuthUrlsManager from '@/app/api/AuthUrlsManager';
 import axios from 'axios';
 
+
+interface User {
+    id: number; 
+    email: string;
+}
+
 interface AuthState {
+    user: User | null; 
     tokenKey: string,
     isLoading: boolean;
     errorMessage: string | null;
 };
 
 const initialState: AuthState = {
+    user: null,         
     tokenKey: "authToken",
     isLoading: false,
     errorMessage: null
@@ -23,8 +31,10 @@ const authSlice = createSlice({
         loginStart: state => {
             state.isLoading = true;
         },
-        loginSuccess: (state, action: PayloadAction<string>) => {
-            AsyncStorage.setItem(state.tokenKey, action.payload);
+        loginSuccess: (state, action: PayloadAction<{ token: string; user: User }>) => {
+            const { token, user } = action.payload; 
+            AsyncStorage.setItem(state.tokenKey, token);
+            state.user = action.payload.user;  
             state.isLoading = false;
             state.errorMessage = null;
         },
@@ -34,6 +44,7 @@ const authSlice = createSlice({
             Alert.alert(state.errorMessage);
         },
         logoutSuccess: state => {
+            state.user = null;  
             state.isLoading = false;
             state.errorMessage = null;
         },

@@ -1,7 +1,7 @@
-import React from 'react';
-import Colors from '../constants/Colors';
+import React, { useEffect, useState } from "react";
+import Colors from "../constants/Colors";
 import { useRouter } from "expo-router";
-import { Feather } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 import {
   StyleSheet,
   SafeAreaView,
@@ -10,111 +10,44 @@ import {
   Text,
   TouchableOpacity,
   Image,
-} from 'react-native';
+} from "react-native";
 
-const users = [
-  {
-    user_id: 1,
-    img: '',
-    name: 'Bell Burgess',
-    phone: '+1 (887) 478-2693',
-  },
-  {
-    user_id: 2,
-    img: 'https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
-    name: 'Bernard Baker',
-    phone: '+1 (862) 581-3022',
-  },
-  {
-    user_id: 3,
-    img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
-    name: 'Elma Chapman',
-    phone: '+1 (913) 497-2020',
-  },
-  {
-    user_id: 4,
-    img: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',
-    name: 'Knapp Berry',
-    phone: '+1 (951) 472-2967',
-  },
-  {
-    user_id: 5,
-    img: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80',
-    name: 'Larson Ashbee',
-    phone: '+1 (972) 566-2684',
-  },
-  {
-    user_id: 6,
-    img: '',
-    name: 'Lorraine Abbott',
-    phone: '+1 (959) 422-3635',
-  },
-  {
-    user_id: 7,
-    img: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',
-    name: 'Rosie Arterton',
-    phone: '+1 (845) 456-2237',
-  },
-  {
-    user_id: 8,
-    img: 'https://images.unsplash.com/photo-1573497019236-17f8177b81e8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',
-    name: 'Shelby Ballard',
-    phone: '+1 (824) 467-3579',
-  },
-];
+import UserMessageServiceImpl from "@/app/services/impl/UserMessageServiceImpl";
+import UserMessageUrlsManager from "@/app/api/UserMessageUrlsManager";
+
+import UserMessageDTO from "@/app/dto/UserMessageDTO";
+import MessageCard from "../components/message/MessageCard";
 
 export default function MessageScreen() {
   const router = useRouter();
 
+  const [messagedUsers, setMessagedUsers] = useState<UserMessageDTO[]>([]);
+
+  const getMessagedUsers = async () => {
+    const userMessageService = new UserMessageServiceImpl();
+
+    const users = await userMessageService.fetchUserMessages();
+    setMessagedUsers(users);
+  };
+
+  useEffect(() => {
+    getMessagedUsers();
+  }, []);
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>
-            Message
-          </Text>
-        </View>
+        {/* <View style={styles.header}>
+          <Text style={styles.headerTitle}>Message</Text>
+        </View> */}
 
         <ScrollView contentContainerStyle={styles.messageContent}>
-          {users.length ? (
-            users.map(({ user_id, img, name, phone }, index) => {
-              return (
-                <View key={index} style={styles.cardWrapper}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // handle onPress
-                      router.push({ 
-                        pathname: '/(screens)/message',
-                        params: { user_id, name, phone, img },
-                       });
-                    }}>
-                    <View style={styles.card}>
-                       <Image
-                        alt=""
-                        resizeMode="cover"
-                        source={img ? { uri: img } : require('../../assets/images/blank.png')}
-                        style={styles.cardImg}
-                      />
-
-                      <View style={styles.cardBody}>
-                        <Text> User: {user_id}</Text>
-                        <Text style={styles.cardTitle}>{name}</Text>
-                        <Text style={styles.cardPhone}>{phone}</Text>
-                      </View>
-
-                      <View style={styles.cardAction}>
-                        <Feather
-                          color={Colors.gray}
-                          name="chevron-right"
-                          size={22} />
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              );
-            })
+        {messagedUsers.length ? (
+            messagedUsers.map((user, index) => (
+              <MessageCard key={index} user={user} />
+            ))
           ) : (
-            <Text >No results</Text>
+            <Text>No results</Text>
           )}
         </ScrollView>
       </View>
@@ -129,24 +62,24 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     flexBasis: 0,
   },
-   /** Header */
-   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+  /** Header */
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
     paddingHorizontal: 16,
     paddingTop: 10,
   },
- 
+
   headerTitle: {
     fontSize: 19,
-    fontWeight: '600',
-    color: '#000',
+    fontWeight: "600",
+    color: "#000",
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
-    textAlign: 'center',
+    textAlign: "center",
   },
   messageContent: {
     paddingLeft: 24,
@@ -154,13 +87,13 @@ const styles = StyleSheet.create({
   /** Card */
   card: {
     paddingVertical: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
   cardWrapper: {
     borderBottomWidth: 1,
-    borderColor: Colors.divider
+    borderColor: Colors.divider,
   },
   cardImg: {
     width: 42,
@@ -168,29 +101,29 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   cardAvatar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: Colors.bgColor,
   },
   cardAvatarText: {
     fontSize: 19,
-    fontWeight: 'bold',
-    color: Colors.bgColor
+    fontWeight: "bold",
+    color: Colors.bgColor,
   },
   cardBody: {
-    marginRight: 'auto',
+    marginRight: "auto",
     marginLeft: 12,
   },
   cardTitle: {
     fontSize: 16,
-    fontWeight: '700',
-    color: Colors.black
+    fontWeight: "700",
+    color: Colors.black,
   },
   cardPhone: {
     fontSize: 15,
     lineHeight: 20,
-    fontWeight: '400',
+    fontWeight: "400",
     color: Colors.black,
     marginTop: 3,
   },
